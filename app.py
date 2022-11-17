@@ -12,7 +12,7 @@ app.secret_key="any string but secret"
 dbconfig = {
 	"host":"localhost",
 	"user":"root",
-	"password":"123456",
+	"password":"",
 	"charset":"utf-8",
 	"database":"week09"
 }
