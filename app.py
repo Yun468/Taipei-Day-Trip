@@ -22,18 +22,7 @@ mydbpool = pooling.MySQLConnectionPool(
     pool_reset_session = True,
     **dbconfig
 ) 
-#SELECT id,name,category,description,address,transport,mrt,lat,lng FROM data WHERE ID = %s
-#row_headers=[x[0] for x in mycursor.description]
-#info= dict(zip(row_headers,result))
-# sql_1 = "SELECT images FROM image_url where ID = %s"
-# val=(id,)
-# mycursor.execute(sql_1,val)
-# images = mycursor.fetchall()		#images = 陣列，只有一項，項為tuple，tuple 內是str，str內是list
-# images = images[0][0]					#images = str
-# characters = "]['"
-# images = "".join( x for x in images if x not in characters)
-# images = images.split(',')			#list /  print(images[0])      #str
-# images={"images":images}
+
 
 @app.route("/api/attractions")
 def apiattraction():
