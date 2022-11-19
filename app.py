@@ -2,6 +2,7 @@ from flask import Flask,request,render_template, jsonify
 import mysql.connector
 from mysql.connector import pooling
 from difflib import *
+from flask import *
 
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
@@ -449,7 +450,11 @@ def index():
 	return render_template("index.html")
 @app.route("/attraction/<id>")
 def attraction(id):
+
 	return render_template("attraction.html",id=id)
+
+	return render_template("attraction.html")
+
 @app.route("/booking")
 def booking():
 	return render_template("booking.html")
@@ -460,5 +465,5 @@ def thankyou():
 
 
 
-
 app.run(port=3000,host=0.0.0.0,debug=True)
+
