@@ -13,7 +13,6 @@ dbconfig = {
 	"host":"localhost",
 	"user":"root",
 	"password":"",
-	"charset":"utf-8",
 	"database":"week09"
 }
 mydbpool = pooling.MySQLConnectionPool(
@@ -425,7 +424,6 @@ def apiattractionid(attractionId):
 	mydb.close()
 	return json_data
 
-
 @app.route("/api/categories")
 def categories():
 	mydb = mydbpool.get_connection()		# Get connection_object from a pool :mydb
@@ -463,4 +461,4 @@ def thankyou():
 
 
 
-app.run(port=3000,debug=True)
+app.run(port=3000,host=0.0.0.0,debug=True)
