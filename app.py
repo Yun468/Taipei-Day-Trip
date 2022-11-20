@@ -12,9 +12,9 @@ app.secret_key="any string but secret"
 
 dbconfig = {
 	"host":"localhost",
-	"user":"debian-sys-maint",
+	"user":"root",
 	"password":"",
-	"database":"WeHlp"
+	"database":"week09"
 }
 mydbpool = pooling.MySQLConnectionPool(
 	pool_name = "mypool",
@@ -180,7 +180,6 @@ def apiattractionid(attractionId):
 			result[-1] = eval(result[-1])
 			row_headers = [x[0] for x in mycursor.description]
 			json_data.append(dict(zip(row_headers,result)))
-			print(json_data)
 			json_data = {"data" : json_data}
 	except:
 		json_data = {
@@ -232,4 +231,4 @@ def thankyou():
 
 
 
-app.run(port=3000, host="0.0.0.0")
+app.run(port=3000, host="0.0.0.0",)
