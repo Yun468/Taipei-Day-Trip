@@ -13,7 +13,7 @@ app.secret_key="any string but secret"
 dbconfig = {
 	"host":"localhost",
 	"user":"root",
-	"password":"",
+	"password":"123456",
 	"database":"week09"
 }
 mydbpool = pooling.MySQLConnectionPool(
@@ -49,8 +49,14 @@ def apiattraction():
 				val=(star,)
 				mycursor.execute(sql_2,val)
 				result=mycursor.fetchall()
+				result = list(result)
+				new_result = []
+				for index in result:
+					index = list(index)
+					index[-1] = eval(index[-1])
+					new_result.append(index)				
 				row_headers=[x[0] for x in mycursor.description]
-				for x in result:
+				for x in new_result:
 					info= dict(zip(row_headers,x))
 					attractions.append(info)
 			except:
@@ -90,8 +96,14 @@ def apiattraction():
 					val=(star,)
 					mycursor.execute(sql_2,val)
 					result=mycursor.fetchall()
+					result = list(result)
+					new_result = []
+					for index in result:
+						index = list(index)
+						index[-1] = eval(index[-1])
+						new_result.append(index)				
 					row_headers=[x[0] for x in mycursor.description]
-					for x in result:
+					for x in new_result:
 						info= dict(zip(row_headers,x))
 						attractions.append(info)
 				except:
@@ -122,8 +134,14 @@ def apiattraction():
 					val=("%"+keyword+"%",star)
 					mycursor.execute(sql,val)
 					result=mycursor.fetchall()
+					result = list(result)
+					new_result = []
+					for index in result:
+						index = list(index)
+						index[-1] = eval(index[-1])
+						new_result.append(index)				
 					row_headers=[x[0] for x in mycursor.description]
-					for x in result:
+					for x in new_result:
 						info= dict(zip(row_headers,x))
 						attractions.append(info)
 				except:
@@ -162,6 +180,8 @@ def apiattractionid(attractionId):
 			"message": "景點編號不存在"
 			}
 		else:
+			result = list(result)
+			result[-1] = eval(result[-1])
 			row_headers = [x[0] for x in mycursor.description]
 			json_data.append(dict(zip(row_headers,result)))
 			json_data = {"data" : json_data}
@@ -215,5 +235,5 @@ def thankyou():
 
 
 
-app.run(port=3000,host=0.0.0.0)
-
+app.run(port=3000,host="0.0.0.0")
+ 
