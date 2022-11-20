@@ -12,9 +12,9 @@ app.secret_key="any string but secret"
 
 dbconfig = {
 	"host":"localhost",
-	"user":"root",
+	"user":"debian-sys-maint",
 	"password":"",
-	"database":"week09"
+	"database":"WeHlp"
 }
 mydbpool = pooling.MySQLConnectionPool(
 	pool_name = "mypool",
@@ -164,14 +164,10 @@ def apiattraction():
 def apiattractionid(attractionId):
 	mydb = mydbpool.get_connection()
 	mycursor = mydb.cursor()
+	json_data = []
 	try:
-		json_data=[]
-		sql = "SELECT ID from data where _id=%s"
+		sql = "SELECT data._id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.ID = image_url.ID WHERE data._id = %s"
 		val =(attractionId,)
-		mycursor.execute(sql,val)
-		attractionId = mycursor.fetchone()
-		sql = "SELECT data._id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.ID = image_url.ID WHERE data.ID = %s"
-		val =(attractionId[0],)
 		mycursor.execute(sql,val)
 		result = mycursor.fetchone()
 		if result == None:
@@ -184,6 +180,7 @@ def apiattractionid(attractionId):
 			result[-1] = eval(result[-1])
 			row_headers = [x[0] for x in mycursor.description]
 			json_data.append(dict(zip(row_headers,result)))
+			print(json_data)
 			json_data = {"data" : json_data}
 	except:
 		json_data = {
@@ -235,5 +232,4 @@ def thankyou():
 
 
 
-app.run(port=3000,host="0.0.0.0")
- 
+app.run(port=3000, host="0.0.0.0")
