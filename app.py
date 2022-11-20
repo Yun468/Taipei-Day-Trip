@@ -43,47 +43,21 @@ def apiattraction():
 			}
 			nextPage = None
 		else:
-			id = (page)*12+1
-			count = 12
-			if (id +12)> max_id:
-				count = (max_id - id)+1
-			for x in range(count):
-				try:
-					sql_1 = "SELECT images FROM image_url where ID = %s"
-					val=(id,)
-					mycursor.execute(sql_1,val)
-					images = mycursor.fetchall()		#images = 陣列，只有一項，項為tuple，tuple 內是str，str內是list
-					images = images[0][0]					#images = str
-					characters = "]['"
-					images = "".join( x for x in images if x not in characters)
-					images = images.split(',')			#list /  print(images[0])      #str
-					images={"images":images}
-				except:
-					attractions={
-								"error": True,
-								"message": "搜尋圖片資料連線錯誤"
-								}
-				try:
-					sql_2 = "SELECT _id,name,category,description,address,transport,mrt,lat,lng FROM data WHERE ID = %s"
-					val=(id,)
-					mycursor.execute(sql_2,val)
-					result=mycursor.fetchone()
-					row_headers=[x[0] for x in mycursor.description]
-					info= dict(zip(row_headers,result))
-				except:
-					attractions={
-								"error": True,
-								"message": "搜尋景點資訊錯誤"
-								}
-				try:
-					json_data={**info,**images}			#json_data = 所有景點資訊的資訊,JSON
-					attractions.append(json_data)		#將json_data放入arry
-					id =id+1
-				except:
-					attractions={
-								"error": True,
-								"message": "程式內部錯誤"
-								}
+			try:
+				star = (page*12)
+				sql_2 = sql = "SELECT data._id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.ID = image_url.ID LIMIT %s,12"
+				val=(star,)
+				mycursor.execute(sql_2,val)
+				result=mycursor.fetchall()
+				row_headers=[x[0] for x in mycursor.description]
+				for x in result:
+					info= dict(zip(row_headers,x))
+					attractions.append(info)
+			except:
+				attractions={
+							"error": True,
+							"message": "搜尋景點資訊錯誤"
+							}
 			nextPage = page +1	
 			if nextPage >= max_page:
 				nextPage = None
@@ -98,293 +72,65 @@ def apiattraction():
 			if CAT[0] == keyword  :
 				Classification = True
 		if Classification == True:
-			sql ="SELECT ID FROM data where category = %s"
-			val=(keyword,)
+			sql = "SELECT COUNT(*) FROM data WHERE category = %s"
+			val =(keyword,)
 			mycursor.execute(sql,val)
-			res = mycursor.fetchall()		#res = ID資料
-			count = len(res)
-			if count <= 12 :
-				if page != 0:
-					attractions={
+			count = mycursor.fetchone()[0]
+			max_page = count //12
+			if page > max_page:
+				attractions={
 					"error": True,
-					"message": "超過總頁數範圍"
-					}
-				else:
-					for index in range(count):						
-						try:
-							id = res[index][0]
-							sql_1 = "SELECT images FROM image_url where ID = %s"
-							val=(id,)
-							mycursor.execute(sql_1,val)
-							images = mycursor.fetchall()		#images = 陣列，只有一項，項為tuple，tuple 內是str，str內是list
-							images = images[0][0]					#images = str
-							characters = "]['"
-							images = "".join( x for x in images if x not in characters)
-							images = images.split(',')			#list /  print(images[0])      #str
-							images={"images":images}
-						except:
-							attractions={
-							"error": True,
-							"message": "搜尋圖片資料連線錯誤"
-							}
-						try:
-							sql_2 = "SELECT _id,name,category,description,address,transport,mrt,lat,lng FROM data WHERE ID = %s"
-							val=(id,)
-							mycursor.execute(sql_2,val)
-							result=mycursor.fetchone()
-							row_headers=[x[0] for x in mycursor.description]
-							info= dict(zip(row_headers,result))						
-						except:
-							attractions={
-							"error": True,
-							"message": "搜尋景點資訊錯誤"
-							}
-						try:
-							json_data={**info,**images}			#json_data = 所有景點資訊的資訊,JSON	
-							attractions.append(json_data)		#將json_data放入arry
-						except:
-							attractions={
-							"error": True,
-							"message": "程式內部問題"
-							}			
+					"message": "頁數超出最大範圍"
+				}
 				nextPage = None
 			else:
-				max_page = (count //12)
-				if page <  max_page:
-					index = page*12
-					for x in range(12):
-						try:								
-							ID =res[index][0]
-							sql_1 ="SELECT _id,name,category,description,address,transport,mrt,lat,lng FROM data where ID =%s"
-							val_1=(ID,)
-							mycursor.execute(sql_1,val_1)
-							result = mycursor.fetchone()
-							row_headers=[x[0] for x in mycursor.description]
-							info= dict(zip(row_headers,result))		
-						except:
-							attractions={
-								"error": True,
-								"message": "景點分類搜尋錯誤"
-							}
-						try:									
-							sql_2 ="SELECT images FROM image_url where ID =%s"
-							val_2=(ID,)
-							mycursor.execute(sql_2,val_2)
-							images = mycursor.fetchall()
-							images = images[0][0]					#images = str
-							characters = "]['"
-							images = "".join( x for x in images if x not in characters)
-							images = images.split(',')			#list /  print(images[0])      #str
-							images={"images":images}
-						except:
-							attractions={
-								"error": True,
-								"message": "景點分類圖片搜尋錯誤"
-							}
-						try:
-							index = index+1
-							json_data={**info,**images}			#json_data = 所有景點資訊的資訊,JSON
-							attractions.append(json_data)		#將json_data放入arry
-						except:
-							attractions={
-							"error": True,
-							"message": "景點分類程式內部錯誤1"
-							}
-					nextPage = None						
-				elif page == max_page:
-					index = (page*12)
-					for x in range(count%12):
-						try:								
-							ID =res[index][0]
-							sql_1 ="SELECT _id,name,category,description,address,transport,mrt,lat,lng FROM data where ID =%s"
-							val_1=(ID,)
-							mycursor.execute(sql_1,val_1)
-							result = mycursor.fetchone()
-							row_headers=[x[0] for x in mycursor.description]
-							info= dict(zip(row_headers,result))		
-						except:
-							attractions={
-								"error": True,
-								"message": "景點分類搜尋錯誤"
-							}
-						try:									
-							sql_2 ="SELECT images FROM image_url where ID =%s"
-							val_2=(ID,)
-							mycursor.execute(sql_2,val_2)
-							images = mycursor.fetchall()
-							images = images[0][0]					#images = str
-							characters = "]['"
-							images = "".join( x for x in images if x not in characters)
-							images = images.split(',')			#list /  print(images[0])      #str
-							images={"images":images}
-
-						except:
-							attractions={
-								"error": True,
-								"message": "景點分類圖片搜尋錯誤"
-							}
-						try:
-							index = index+1
-							json_data={**info,**images}			#json_data = 所有景點資訊的資訊,JSON
-							attractions.append(json_data)		#將json_data放入arry
-						except:
-							attractions={
-							"error": True,
-							"message": "景點分類程式內部錯誤1"
-							}				
-							nextPage = None
-				else:
+				try:
+					star = (page*12)
+					sql_2 = sql = "SELECT data._id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.ID = image_url.ID LIMIT %s,12"
+					val=(star,)
+					mycursor.execute(sql_2,val)
+					result=mycursor.fetchall()
+					row_headers=[x[0] for x in mycursor.description]
+					for x in result:
+						info= dict(zip(row_headers,x))
+						attractions.append(info)
+				except:
 					attractions={
-						"error": True,
-						"message": "頁數超出最大範圍"
-					}
-					nextPage = None
+								"error": True,
+								"message": "搜尋景點資訊錯誤"
+								}
 				nextPage = page +1	
 				if nextPage >= max_page:
 					nextPage = None
 			attractions={"naxtPage":nextPage,"data":attractions}
 		else:
-			sql ="SELECT ID FROM data where name LIKE %s"
+			sql ="SELECT COUNT(*) FROM data where name LIKE %s"
 			val=("%"+keyword+"%",)
 			mycursor.execute(sql,val)
-			res = mycursor.fetchall()		#res = ID資料
-			count = len(res)
-			if count <= 12 :
-				if page != 0:
-					attractions={
+			count = mycursor.fetchone()[0]
+			max_page = count/12
+			if page > max_page:
+				attractions={
 					"error": True,
-					"message": "超過總頁數範圍"
-					}
-				else:
-					for index in range(count):						
-						try:
-							id = res[index][0]
-							sql_1 = "SELECT images FROM image_url where ID = %s"
-							val=(id,)
-							mycursor.execute(sql_1,val)
-							images = mycursor.fetchall()		#images = 陣列，只有一項，項為tuple，tuple 內是str，str內是list
-							images = images[0][0]					#images = str
-							characters = "]['"
-							images = "".join( x for x in images if x not in characters)
-							images = images.split(',')			#list /  print(images[0])      #str
-							images={"images":images}
-						except:
-							attractions={
-							"error": True,
-							"message": "搜尋圖片資料連線錯誤"
-							}
-						try:
-							sql_2 = "SELECT id,name,category,description,address,transport,mrt,lat,lng FROM data WHERE ID = %s"
-							val=(id,)
-							mycursor.execute(sql_2,val)
-							result=mycursor.fetchone()
-							row_headers=[x[0] for x in mycursor.description]
-							info= dict(zip(row_headers,result))						
-						except:
-							attractions={
-							"error": True,
-							"message": "搜尋景點資訊錯誤"
-							}
-						try:
-							json_data={**info,**images}			#json_data = 所有景點資訊的資訊,JSON	
-							attractions.append(json_data)		#將json_data放入arry
-						except:
-							attractions={
-							"error": True,
-							"message": "程式內部問題"
-							}			
+					"message": "頁數超出最大範圍"
+				}
 				nextPage = None
 			else:
-				max_page = (count //12)
-				if page <  max_page:
-					index = page*12
-					for x in range(12):
-						try:								
-							ID =res[index][0]
-							sql_1 ="SELECT _id,name,category,description,address,transport,mrt,lat,lng FROM data where ID =%s"
-							val_1=(ID,)
-							mycursor.execute(sql_1,val_1)
-							result = mycursor.fetchone()
-							row_headers=[x[0] for x in mycursor.description]
-							info= dict(zip(row_headers,result))		
-						except:
-							attractions={
-								"error": True,
-								"message": "景點分類搜尋錯誤"
-							}
-						try:									
-							sql_2 ="SELECT images FROM image_url where ID =%s"
-							val_2=(ID,)
-							mycursor.execute(sql_2,val_2)
-							images = mycursor.fetchall()
-							images = images[0][0]					#images = str
-							characters = "]['"
-							images = "".join( x for x in images if x not in characters)
-							images = images.split(',')			#list /  print(images[0])      #str
-							images={"images":images}
-						except:
-							attractions={
-								"error": True,
-								"message": "景點分類圖片搜尋錯誤"
-							}
-						try:
-							index = index+1
-							json_data={**info,**images}			#json_data = 所有景點資訊的資訊,JSON
-							attractions.append(json_data)		#將json_data放入arry
-						except:
-							attractions={
-							"error": True,
-							"message": "景點分類程式內部錯誤1"
-							}
-					nextPage = None						
-				elif page == max_page:
-					index = (page*12)
-					for x in range(count%12):
-						try:								
-							ID =res[index][0]
-							sql_1 ="SELECT _id,name,category,description,address,transport,mrt,lat,lng FROM data where ID =%s"
-							val_1=(ID,)
-							mycursor.execute(sql_1,val_1)
-							result = mycursor.fetchone()
-							row_headers=[x[0] for x in mycursor.description]
-							info= dict(zip(row_headers,result))		
-						except:
-							attractions={
-								"error": True,
-								"message": "景點分類搜尋錯誤"
-							}
-						try:									
-							sql_2 ="SELECT images FROM image_url where ID =%s"
-							val_2=(ID,)
-							mycursor.execute(sql_2,val_2)
-							images = mycursor.fetchall()
-							images = images[0][0]					#images = str
-							characters = "]['"
-							images = "".join( x for x in images if x not in characters)
-							images = images.split(',')			#list /  print(images[0])      #str
-							images={"images":images}
-
-						except:
-							attractions={
-								"error": True,
-								"message": "景點分類圖片搜尋錯誤"
-							}
-						try:
-							index = index+1
-							json_data={**info,**images}			#json_data = 所有景點資訊的資訊,JSON
-							attractions.append(json_data)		#將json_data放入arry
-						except:
-							attractions={
-							"error": True,
-							"message": "景點分類程式內部錯誤1"
-							}				
-							nextPage = None
-				else:
+				try:
+					star = (page*12)
+					sql =  "SELECT data._id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.ID = image_url.ID  where data.name LIKE %s limit %s,12;"
+					val=("%"+keyword+"%",star)
+					mycursor.execute(sql,val)
+					result=mycursor.fetchall()
+					row_headers=[x[0] for x in mycursor.description]
+					for x in result:
+						info= dict(zip(row_headers,x))
+						attractions.append(info)
+				except:
 					attractions={
-						"error": True,
-						"message": "頁數超出最大範圍"
-					}
-					nextPage = None
+								"error": True,
+								"message": "搜尋景點資訊錯誤"
+								}
 				nextPage = page +1	
 				if nextPage >= max_page:
 					nextPage = None
@@ -402,8 +148,12 @@ def apiattractionid(attractionId):
 	mycursor = mydb.cursor()
 	try:
 		json_data=[]
-		sql = "SELECT _id,name,category,description,address,transport,mrt,lat,lng FROM data WHERE _id = %s"
+		sql = "SELECT ID from data where _id=%s"
 		val =(attractionId,)
+		mycursor.execute(sql,val)
+		attractionId = mycursor.fetchone()
+		sql = "SELECT data._id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.ID = image_url.ID WHERE data.ID = %s"
+		val =(attractionId[0],)
 		mycursor.execute(sql,val)
 		result = mycursor.fetchone()
 		if result == None:
@@ -465,5 +215,5 @@ def thankyou():
 
 
 
-app.run(port=3000,host=0.0.0.0,debug=True)
+app.run(port=3000,host=0.0.0.0)
 
