@@ -30,7 +30,7 @@ def apiattraction():
 	mycursor = mydb.cursor()
 	page = request.args.get("page",0,type=int)
 	keyword = request.args.get("keyword",type=str)
-	attractions=[]
+	info = {}
 	if keyword =="" or keyword== None:		
 		sql = "SELECT COUNT(*) FROM data"
 		mycursor.execute(sql)
@@ -45,7 +45,7 @@ def apiattraction():
 		else:
 			try:
 				star = (page*12)
-				sql_2 = sql = "SELECT data._id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.ID = image_url.ID LIMIT %s,12"
+				sql_2 = sql = "SELECT data.id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.newid = image_url.ID LIMIT %s,12"
 				val=(star,)
 				mycursor.execute(sql_2,val)
 				result=mycursor.fetchall()
@@ -58,7 +58,6 @@ def apiattraction():
 				row_headers=[x[0] for x in mycursor.description]
 				for x in new_result:
 					info= dict(zip(row_headers,x))
-					attractions.append(info)
 			except:
 				attractions={
 							"error": True,
@@ -67,13 +66,14 @@ def apiattraction():
 			nextPage = page +1	
 			if nextPage >= max_page:
 				nextPage = None
-		attractions={"naxtPage":nextPage,"data":attractions}
+		attractions={"naxtPage":nextPage,"data":info}
 
 	else:
 		sql ="SELECT DISTINCT category FROM data"
 		mycursor.execute(sql)
 		category = mycursor.fetchall()		
 		Classification = False
+		info = {}
 		for CAT in category:
 			if CAT[0] == keyword  :
 				Classification = True
@@ -92,7 +92,7 @@ def apiattraction():
 			else:
 				try:
 					star = (page*12)
-					sql_2 = sql = "SELECT data._id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.ID = image_url.ID LIMIT %s,12"
+					sql_2 = sql = "SELECT data.id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.newid = image_url.ID LIMIT %s,12"
 					val=(star,)
 					mycursor.execute(sql_2,val)
 					result=mycursor.fetchall()
@@ -105,7 +105,6 @@ def apiattraction():
 					row_headers=[x[0] for x in mycursor.description]
 					for x in new_result:
 						info= dict(zip(row_headers,x))
-						attractions.append(info)
 				except:
 					attractions={
 								"error": True,
@@ -114,7 +113,7 @@ def apiattraction():
 				nextPage = page +1	
 				if nextPage >= max_page:
 					nextPage = None
-			attractions={"naxtPage":nextPage,"data":attractions}
+			attractions={"naxtPage":nextPage,"data":info}
 		else:
 			sql ="SELECT COUNT(*) FROM data where name LIKE %s"
 			val=("%"+keyword+"%",)
@@ -130,7 +129,7 @@ def apiattraction():
 			else:
 				try:
 					star = (page*12)
-					sql =  "SELECT data._id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.ID = image_url.ID  where data.name LIKE %s limit %s,12;"
+					sql =  "SELECT data.id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.newid = image_url.ID  where data.name LIKE %s limit %s,12;"
 					val=("%"+keyword+"%",star)
 					mycursor.execute(sql,val)
 					result=mycursor.fetchall()
@@ -143,7 +142,6 @@ def apiattraction():
 					row_headers=[x[0] for x in mycursor.description]
 					for x in new_result:
 						info= dict(zip(row_headers,x))
-						attractions.append(info)
 				except:
 					attractions={
 								"error": True,
@@ -152,7 +150,7 @@ def apiattraction():
 				nextPage = page +1	
 				if nextPage >= max_page:
 					nextPage = None
-			attractions={"naxtPage":nextPage,"data":attractions}
+			attractions={"naxtPage":nextPage,"data":info}
 
 	
 	mycursor.close()
@@ -164,9 +162,9 @@ def apiattraction():
 def apiattractionid(attractionId):
 	mydb = mydbpool.get_connection()
 	mycursor = mydb.cursor()
-	json_data = []
+	json_data = {}
 	try:
-		sql = "SELECT data._id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.ID = image_url.ID WHERE data._id = %s"
+		sql = "SELECT data.id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.newid = image_url.ID WHERE data.id = %s"
 		val =(attractionId,)
 		mycursor.execute(sql,val)
 		result = mycursor.fetchone()
@@ -179,17 +177,17 @@ def apiattractionid(attractionId):
 			result = list(result)
 			result[-1] = eval(result[-1])
 			row_headers = [x[0] for x in mycursor.description]
-			json_data.append(dict(zip(row_headers,result)))
+			json_data = dict(zip(row_headers,result))
 			json_data = {"data" : json_data}
 	except:
 		json_data = {
 		"error": True,
 		"message": "景點編號搜尋伺服器內部錯誤"
 		}
-	json_data = jsonify(json_data)
+	attraction = jsonify(json_data)
 	mycursor.close()
 	mydb.close()
-	return json_data
+	return attraction
 
 @app.route("/api/categories")
 def categories():
@@ -216,11 +214,7 @@ def index():
 	return render_template("index.html")
 @app.route("/attraction/<id>")
 def attraction(id):
-
-	return render_template("attraction.html",id=id)
-
 	return render_template("attraction.html")
-
 @app.route("/booking")
 def booking():
 	return render_template("booking.html")
@@ -231,4 +225,5 @@ def thankyou():
 
 
 
-app.run(port=3000, host="0.0.0.0",)
+app.run(port=3000,host="0.0.0.0")
+

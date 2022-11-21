@@ -65,7 +65,7 @@ for data in datas:
     avEnd = data["avEnd"]
     address = data["address"].replace(" ","")
     
-    sql = "INSERT INTO data (_id,rate,transport,name,date,lng,REF_WP,avBegin,langinfo,mrt,SERIAL_NO,RowNumber,category,MEMO_TIME,POI,idpt,lat,description,avEnd,address) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    sql = "INSERT INTO data (id,rate,transport,name,date,lng,REF_WP,avBegin,langinfo,mrt,SERIAL_NO,RowNumber,category,MEMO_TIME,POI,idpt,lat,description,avEnd,address) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     val = (_id,rate,transport,name,date,lng,REF_WP,avBegin,langinfo,mrt,SERIAL_NO,RowNumber,category,MEMO_TIME,POI,idpt,lat,description,avEnd,address,)
     cur.execute(sql,val)
     mydb.commit()
