@@ -14,8 +14,8 @@ app.secret_key="any string but secret"
 dbconfig = {
 	"host":"localhost",
 	"user":"root",
-	"password":"123456",
-	"database":"week09"
+	"password":"",
+	"database":"week"
 }
 mydbpool = pooling.MySQLConnectionPool(
 	pool_name = "mypool",
@@ -31,7 +31,6 @@ def apiattraction():
 	mycursor = mydb.cursor()
 	page = request.args.get("page",0,type=int)
 	keyword = request.args.get("keyword",type=str)
-	print(keyword)  ######################################
 	info = []
 	if keyword =="" or keyword== None:		
 		sql = "SELECT COUNT(*) FROM data"
@@ -81,7 +80,6 @@ def apiattraction():
 				Classification = True
 				break
 		if Classification == True:
-			print(2)
 			sql = "SELECT COUNT(*) FROM data WHERE category = %s"
 			val =(keyword,)
 			mycursor.execute(sql,val)
@@ -96,8 +94,8 @@ def apiattraction():
 			else:
 				try:
 					star = (page*12)
-					sql_2 = sql = "SELECT data.id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.newid = image_url.ID LIMIT %s,12"
-					val=(star,)
+					sql_2 = sql = "SELECT data.id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.newid = image_url.ID WHERE category = %s LIMIT %s,12"
+					val=(keyword,star)
 					mycursor.execute(sql_2,val)
 					result=mycursor.fetchall()
 					result = list(result)
@@ -229,5 +227,5 @@ def thankyou():
 
 
 
-app.run(port=3000,debug =True)
-# host="0.0.0.0"
+app.run(port=3000,host="0.0.0.0")
+
