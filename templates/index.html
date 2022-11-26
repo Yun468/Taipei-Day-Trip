@@ -298,7 +298,7 @@
             })};
         });
 
-    //點擊搜尋////////////////////////////////
+    //點擊搜尋
 
         //關閉迴車監聽
         document.querySelector('form').addEventListener('submit',function(e){e.preventDefault()});
@@ -314,8 +314,6 @@
                     return response.json()        
             })
             .then(function (result){
-                console.log(value)
-                console.log(result)
                 if (result["nextPage"] === null){
                     let finish = document.querySelector(".finish");
                     finish.style = "display:block; flex:1";

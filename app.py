@@ -76,7 +76,7 @@ def apiattraction():
 		Classification = False
 		info = []
 		for CAT in category:
-			if CAT[0] :
+			if CAT[0] == keyword :
 				Classification = True
 				break
 		if Classification == True:
