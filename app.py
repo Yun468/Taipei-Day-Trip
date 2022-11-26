@@ -3,17 +3,18 @@ import mysql.connector
 from mysql.connector import pooling
 from difflib import *
 from flask import *
+from flask_cors import CORS
 
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
-
+CORS(app)
 app.secret_key="any string but secret"
 
 dbconfig = {
 	"host":"localhost",
 	"user":"root",
-	"password":"",
+	"password":"123456",
 	"database":"week09"
 }
 mydbpool = pooling.MySQLConnectionPool(
@@ -30,7 +31,8 @@ def apiattraction():
 	mycursor = mydb.cursor()
 	page = request.args.get("page",0,type=int)
 	keyword = request.args.get("keyword",type=str)
-	info = {}
+	print(keyword)  ######################################
+	info = []
 	if keyword =="" or keyword== None:		
 		sql = "SELECT COUNT(*) FROM data"
 		mycursor.execute(sql)
@@ -57,27 +59,29 @@ def apiattraction():
 					new_result.append(index)				
 				row_headers=[x[0] for x in mycursor.description]
 				for x in new_result:
-					info= dict(zip(row_headers,x))
+					info.append(dict(zip(row_headers,x)))
 			except:
 				attractions={
 							"error": True,
 							"message": "搜尋景點資訊錯誤"
 							}
 			nextPage = page +1	
-			if nextPage >= max_page:
+			if nextPage > max_page:
 				nextPage = None
-		attractions={"naxtPage":nextPage,"data":info}
+		attractions={"nextPage":nextPage,"data":info}
 
 	else:
 		sql ="SELECT DISTINCT category FROM data"
 		mycursor.execute(sql)
-		category = mycursor.fetchall()		
+		category = mycursor.fetchall()
 		Classification = False
-		info = {}
+		info = []
 		for CAT in category:
-			if CAT[0] == keyword  :
+			if CAT[0] :
 				Classification = True
+				break
 		if Classification == True:
+			print(2)
 			sql = "SELECT COUNT(*) FROM data WHERE category = %s"
 			val =(keyword,)
 			mycursor.execute(sql,val)
@@ -104,16 +108,16 @@ def apiattraction():
 						new_result.append(index)				
 					row_headers=[x[0] for x in mycursor.description]
 					for x in new_result:
-						info= dict(zip(row_headers,x))
+						info.append(dict(zip(row_headers,x)))
 				except:
 					attractions={
 								"error": True,
 								"message": "搜尋景點資訊錯誤"
 								}
 				nextPage = page +1	
-				if nextPage >= max_page:
+				if nextPage > max_page:
 					nextPage = None
-			attractions={"naxtPage":nextPage,"data":info}
+			attractions={"nextPage":nextPage,"data":info}
 		else:
 			sql ="SELECT COUNT(*) FROM data where name LIKE %s"
 			val=("%"+keyword+"%",)
@@ -141,16 +145,16 @@ def apiattraction():
 						new_result.append(index)				
 					row_headers=[x[0] for x in mycursor.description]
 					for x in new_result:
-						info= dict(zip(row_headers,x))
+						info.append(dict(zip(row_headers,x)))
 				except:
 					attractions={
 								"error": True,
 								"message": "搜尋景點資訊錯誤"
 								}
 				nextPage = page +1	
-				if nextPage >= max_page:
+				if nextPage > max_page:
 					nextPage = None
-			attractions={"naxtPage":nextPage,"data":info}
+			attractions={"nextPage":nextPage,"data":info}
 
 	
 	mycursor.close()
@@ -225,5 +229,5 @@ def thankyou():
 
 
 
-app.run(port=3000,host="0.0.0.0")
-
+app.run(port=3000,debug =True)
+# host="0.0.0.0"
