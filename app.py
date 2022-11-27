@@ -3,18 +3,20 @@ import mysql.connector
 from mysql.connector import pooling
 from difflib import *
 from flask import *
+from flask_cors import CORS
 
-app=Flask(__name__)
+app = Flask(__name__,
+			static_folder='static')
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
-
+CORS(app)
 app.secret_key="any string but secret"
 
 dbconfig = {
 	"host":"localhost",
 	"user":"root",
 	"password":"",
-	"database":"week09"
+	"database":"week"
 }
 mydbpool = pooling.MySQLConnectionPool(
 	pool_name = "mypool",
@@ -30,7 +32,7 @@ def apiattraction():
 	mycursor = mydb.cursor()
 	page = request.args.get("page",0,type=int)
 	keyword = request.args.get("keyword",type=str)
-	info = {}
+	info = []
 	if keyword =="" or keyword== None:		
 		sql = "SELECT COUNT(*) FROM data"
 		mycursor.execute(sql)
@@ -57,26 +59,27 @@ def apiattraction():
 					new_result.append(index)				
 				row_headers=[x[0] for x in mycursor.description]
 				for x in new_result:
-					info= dict(zip(row_headers,x))
+					info.append(dict(zip(row_headers,x)))
 			except:
 				attractions={
 							"error": True,
 							"message": "搜尋景點資訊錯誤"
 							}
 			nextPage = page +1	
-			if nextPage >= max_page:
+			if nextPage > max_page:
 				nextPage = None
-		attractions={"naxtPage":nextPage,"data":info}
+		attractions={"nextPage":nextPage,"data":info}
 
 	else:
 		sql ="SELECT DISTINCT category FROM data"
 		mycursor.execute(sql)
-		category = mycursor.fetchall()		
+		category = mycursor.fetchall()
 		Classification = False
-		info = {}
+		info = []
 		for CAT in category:
-			if CAT[0] == keyword  :
+			if CAT[0] == keyword :
 				Classification = True
+				break
 		if Classification == True:
 			sql = "SELECT COUNT(*) FROM data WHERE category = %s"
 			val =(keyword,)
@@ -92,8 +95,8 @@ def apiattraction():
 			else:
 				try:
 					star = (page*12)
-					sql_2 = sql = "SELECT data.id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.newid = image_url.ID LIMIT %s,12"
-					val=(star,)
+					sql_2 = sql = "SELECT data.id,data.name,data.category,data.description,data.address,data.transport,data.mrt,data.lat,data.lng,image_url.images FROM data INNER JOIN image_url ON data.newid = image_url.ID WHERE category = %s LIMIT %s,12"
+					val=(keyword,star)
 					mycursor.execute(sql_2,val)
 					result=mycursor.fetchall()
 					result = list(result)
@@ -104,16 +107,16 @@ def apiattraction():
 						new_result.append(index)				
 					row_headers=[x[0] for x in mycursor.description]
 					for x in new_result:
-						info= dict(zip(row_headers,x))
+						info.append(dict(zip(row_headers,x)))
 				except:
 					attractions={
 								"error": True,
 								"message": "搜尋景點資訊錯誤"
 								}
 				nextPage = page +1	
-				if nextPage >= max_page:
+				if nextPage > max_page:
 					nextPage = None
-			attractions={"naxtPage":nextPage,"data":info}
+			attractions={"nextPage":nextPage,"data":info}
 		else:
 			sql ="SELECT COUNT(*) FROM data where name LIKE %s"
 			val=("%"+keyword+"%",)
@@ -141,16 +144,16 @@ def apiattraction():
 						new_result.append(index)				
 					row_headers=[x[0] for x in mycursor.description]
 					for x in new_result:
-						info= dict(zip(row_headers,x))
+						info.append(dict(zip(row_headers,x)))
 				except:
 					attractions={
 								"error": True,
 								"message": "搜尋景點資訊錯誤"
 								}
 				nextPage = page +1	
-				if nextPage >= max_page:
+				if nextPage > max_page:
 					nextPage = None
-			attractions={"naxtPage":nextPage,"data":info}
+			attractions={"nextPage":nextPage,"data":info}
 
 	
 	mycursor.close()
