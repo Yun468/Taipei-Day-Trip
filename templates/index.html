@@ -246,14 +246,40 @@
 
 
 
-    //下拉載入  
-        window.addEventListener('scroll',function scroll(){
+    //下拉載入
+        //debounce
+        function debounce(func, delay=400) {
+            let timer = null;
+            
+            return () => {
+                let context = this;
+                let args = arguments;
+            
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                func.apply(context, args);
+                }, delay)
+            }
+        };
+        window.addEventListener('scroll', debounce(scroll));
+        
+        //載入函式
+        function scroll(){
+            if (nextPage === null){
+                window.removeEventListener('scroll', debounce(scroll));
+                return nextPage
+            }; 
             let url =  "http://35.76.166.101:3000/api/attractions?page=";
             let { scrollTop, scrollHeight, clientHeight } = document.documentElement
 
             if (scrollTop + clientHeight >= scrollHeight - 5) {
-                let value ="&keyword="+(input.value);
-                url = url +nextPage+value;
+                console.log(input.value)
+                if (input.value == null){
+                    url = url +nextPage;
+                }else{
+                    let value ="&keyword="+(input.value);
+                    url = url +nextPage+value;
+                }
             fetch(url).then(function (response){         
                 return response.json()        
             })
@@ -291,12 +317,11 @@
                 };
                 nextPage = result["nextPage"];
                 if (nextPage === null){
-                    let finish = document.querySelector(".finish");
-                    finish.style = "display:block";
-                    window.removeEventListener('scroll',scroll);
-                };  
+                let finish = document.querySelector(".finish");
+                finish.style = "display:block";
+                } 
             })};
-        });
+        }
 
     //點擊搜尋
 
