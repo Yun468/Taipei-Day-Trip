@@ -247,7 +247,7 @@
 
 
     //下拉載入  
-        window.addEventListener('scroll',function Event(){
+        window.addEventListener('scroll',function scroll(){
             let url =  "http://35.76.166.101:3000/api/attractions?page=";
             let { scrollTop, scrollHeight, clientHeight } = document.documentElement
 
@@ -293,7 +293,7 @@
                 if (nextPage === null){
                     let finish = document.querySelector(".finish");
                     finish.style = "display:block";
-                    window.removeEventListener('scroll',Event);
+                    window.removeEventListener('scroll',scroll);
                 };  
             })};
         });
@@ -376,17 +376,26 @@
         
     //景點分類關鍵字填入
         //點擊輸入框跳出選單
-        input.addEventListener('click', (event) => {
+        document.addEventListener('click',function openMenu(e){
+            let menuOpen = document.querySelector(".menu_open");
+            let menu = document.querySelector(".menu");
+            let cate = document.querySelectorAll(".cate");
             //打開menu
-            let menu_open = document.querySelector(".menu_open");
-            menu_open.style = "display : block";
+            if (e.target == input){                
+                menuOpen.style = "display : block";
+            }else if(e.target == menu){
+                menuOpen.style = "display : block";
+            }else if(e.target == cate){
+                menuOpen.style = "display : block";
+            }else{
+                menuOpen.style = "display : none";
+            }
         })
         
         //填入景點分類至搜尋框
         function putOn(cate){
             input.value = cate
         }
-
 
 
         
