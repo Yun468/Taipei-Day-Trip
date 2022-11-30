@@ -42,7 +42,6 @@ html{
     justify-content: center;
     width: 100%;
     height: 54px;
-    /* Additional Color/White */
     background: #FFFFFF;
     position:fixed;
     z-index:1;
@@ -57,31 +56,24 @@ html{
     position: absolute;
     width: 150px;
     height: 34px;
-    /* Header 2 - Bold 30(34) */
     font-family: 'Noto Sans TC';
     font-style: normal;
     font-weight: 700;
     font-size: 30px;
     line-height: 34px;
-    /* identical to box height, or 113% */
-    /* Primary Color/Cyan 70 */
     color: #448899;
 }
 .Frame2{
-    /* Auto layout */
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: flex-start;
-        /* padding: 0px; */
     position: absolute;
     width: 175px;
     height: 34px;
     right: 0px;
-        /* bottom: 0px; */
 }
 .Fram1{
-    /* Auto layout */
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -89,38 +81,28 @@ html{
     padding: 0px;
     width: 175px;
     height: 34px;
-    /* Inside auto layout */
     flex: none;
     flex-grow: 0;
 }
 .forNav{
-    /* Auto layout */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     margin : 10px;
-        /* padding: 10px; */
     gap: 10px;
-        /* width: 84px;
-        height: 34px; */
-    /* Inside auto layout */
     flex: none;
     flex-grow: 0;
     
 }
 .BUTTON{
     height: 14px;
-    /* Body - Med 16(13.3) */
     font-family: 'Noto Sans TC';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 14px;
-    /* identical to box height, or 83% */
-    /* Secondary Color/Gray 70 */
     color: #666666;
-    /* Inside auto layout */
     flex: none;
     flex-grow: 0;
 }
@@ -130,7 +112,6 @@ html{
     background-size: cover;
     background-repeat: no-repeat;
     background-clip:inherit;
-    /* Auto layout */
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -140,12 +121,9 @@ html{
     flex-shrink: 0;
     overflow: hidden;
     z-index: -10;
-    /* Light | Cyan Gradient (135deg) */
-    /* background: linear-gradient(135deg, #AADDEE 0%, #66AABB 100%); */
 }
 /* ----------------------------------------slogan*/
 .slogan{
-    /* Auto layout */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -155,7 +133,6 @@ html{
 .slo{
     width: 1180px;
     height: 149px;
-    /* Inside auto layout */
     flex: none;
     flex-grow: 0;
 }
@@ -170,17 +147,13 @@ html{
     height: 41px;
     left: 0px;
     top: 0px;
-    /* Header 1 - Bold 28(24) */
     font-family: 'Noto Sans TC';
     font-weight: 700;
     font-size: 28px;
     line-height: 24px;
-    /* or 86% */
     display: flex;
     align-items: center;
-    /* Secondary Color/Gray 10 */
     color: #F8F8F8;
-    /* Text Shadow */
     text-shadow: 0px 0px 30px #AABBCC;
 }
 .text2{
@@ -189,15 +162,12 @@ html{
     height: 22px;
     left: 0px;
     top: 56px;
-    /* Body - Bold 16(13.3) */
     font-family: 'Noto Sans TC';
     font-weight: 700;
     font-size: 16px;
     line-height: 13px;
-    /* or 83% */
     display: flex;
     align-items: center;
-    /* Secondary Color/Gray 10 */
     color: #F8F8F8;
 }
 .search{
@@ -273,6 +243,7 @@ html{
     margin: 15px;
     width:25%;
     padding: 0;
+
 }
 .obin{
     background-repeat:no-repeat;
@@ -319,7 +290,9 @@ html{
 .det1,.det2{
     width: 50%;
 }
-
+.det2{
+    align-content: center;
+}
 
 @media(max-width:1280px) {
 
@@ -369,14 +342,12 @@ html{
 }
 /* ----------------------------------------footer */
 .footer{
-    /* Auto layout */
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 104px;
     flex-shrink: 0;
-    /* Gray 700 */
     background: #757575;
 }
 .foot{

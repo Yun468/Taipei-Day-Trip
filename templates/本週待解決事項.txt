@@ -1,0 +1,3 @@
+1. 改index 中search 裡的click，寫成監聽事件
+
+2.

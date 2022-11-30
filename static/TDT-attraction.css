@@ -1,0 +1,395 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+html{
+    height: 100%;
+}
+/* --------------------------------------index*/
+.index{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    background: #FFFFFF;
+    z-index: 10;
+    height: 100%;    
+}
+/* --------------------------------------Navigation*/
+.Navi{
+    width: 100%;
+    height: 54px;
+    flex-shrink: 0;
+}
+.Navigation{
+    display:flex;
+    justify-content: center;
+    width: 100%;
+    height: 54px;
+    background: #FFFFFF;
+    position:fixed;
+    z-index:1;
+}
+.navigation{
+    position: fixed;
+    width: 1200px;
+    height: 34px;
+    margin: 10px;
+}
+.tdt{
+    position: absolute;
+    width: 150px;
+    height: 34px;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 34px;
+    color: #448899;
+}
+.Frame2{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+    position: absolute;
+    width: 175px;
+    height: 34px;
+    right: 0px;
+}
+.Fram1{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+    width: 175px;
+    height: 34px;
+    flex: none;
+    flex-grow: 0;
+}
+.forNav{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin : 10px;
+    gap: 10px;
+    flex: none;
+    flex-grow: 0;
+}
+.button{
+    height: 14px;
+    /* Body - Med 16(13.3) */
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 14px;
+    color: #666666;
+    flex: none;
+    flex-grow: 0;
+}
+
+/* ---------------------------------- attraction */
+.attraction{
+    width: 1200px;
+    flex: 1; 
+}
+.section{
+    display: flex;
+    padding: 40px 0;
+}
+/* --------------------------------------圖片輪播 */
+.picture_container{
+    position:relative;
+    height: 400px;
+    width: 45%;
+    margin: 0 15px;
+}
+.picture{
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    background-repeat:no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition:  all 0.7s ease-in-out;
+    position: absolute;
+}
+.active{
+    opacity: 1;
+}
+.arrow_left,.arrow_right{
+    position:absolute;
+    top:50%;
+    width: 36px;
+    height: 36px;
+    opacity: 0.75;
+    margin: 0 10px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    z-index: 2;
+}
+.arrow_left{
+    background-image: url(btn_leftArrow.png);
+}
+.arrow_right{
+    background-image: url(btn_rightArrow.png);
+    right:0;
+}
+.slide_radio{
+    display: flex;
+    position:absolute;
+    bottom: 10px;
+}
+input[name="picture"]{
+    margin: 0 6px;
+    opacity: 0.5;
+    accent-color: black;
+    cursor: pointer;
+    z-index: 2;
+}
+input[name="picture"]:checked{
+    opacity: 1;
+}
+
+/* --------------------------------------------- */
+.profile{
+    width: 50%;
+    margin: 0 15px;
+}
+.name{
+    height: 33px;
+    display: flex;
+    align-items: center;
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    font-size: 24px;
+    color: #666666;
+}
+.cateAndMrt{
+    height: 22px;
+    padding: 15px 0 20px 0 ;
+    font-family: 'Noto Sans TC';
+    font-weight: 500;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    color: #666666;
+}
+.booking_form{
+    width: 560px;
+    background: #E8E8E8;
+    border-radius: 5px;
+    height: 310px;
+}
+.intent{
+    height: 22px;
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 13px;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px 15px 20px;
+    color: #666666;
+}
+.slogan{
+    font-family: 'Noto Sans TC';
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 13px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px 15px 20px;
+    color: #666666;
+}
+.order_date{
+    display: flex;
+    height: 35px;
+    padding: 0 20px 15px 20px;
+}
+.title_text{
+    width: 81px;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 13px;
+    display: flex;
+    align-items: center;
+    color: #666666;
+}
+input[name = "date"]{
+    width: 183px;
+    font-weight: 500;
+    font-size: 16px;
+    margin: 0 0 0 5px;
+    padding: 0 0 0 10px;
+    border:0;
+}
+.time{
+    display: flex;
+    height: 22px;
+    padding: 0 20px 15px 20px;
+}
+
+/* timeRadio +價格 */
+input[name="time"]{
+    display: none;
+}
+input[name="time"]:checked + div > .check_content > .check_item{
+    background-color:#448899;
+}
+.checkTime{
+    display: flex;
+    width: 87px;
+    cursor: pointer;
+}
+.check_content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 22px;
+    height: 22px;
+    background-color: white;
+    border-radius: 50%;
+    margin: 0 0 0 5px;
+}
+.check_item{
+    width: 18px;
+    height: 18px;
+    background-color: white;
+    border-radius: 50%;
+}
+.price{
+    display: flex;
+    padding: 0 20px 25px 20px;
+}
+.morning,.afternoon{
+    margin: 0 0 0 5px;
+    display: none;
+}
+.button{    
+    height: 36px;
+    margin: 0 20px;
+    padding: 10px 20px;
+    background: #448899;
+    color: #FFFFFF;
+    border-width: 0;
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 16px;
+}
+hr{
+    border: 1px solid #E8E8E8;
+     max-width: 1200px;
+}
+/* ---------------------------------- info */
+.intro{
+    padding-top: 58px;
+}
+.intro_index,.intro_title{
+    padding: 0px 10px;
+    font-family: 'Noto Sans TC';
+    font-size: 16px;
+    line-height: 23px;
+    color: #666666;
+}
+.intro_index{
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+.intro_title{
+    height: 32px;
+    font-weight: 700;
+    line-height: 32px;
+}
+
+/* ---------------------------------- footer */
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 104px;
+    flex-shrink: 0;
+    background: #757575;
+}
+.foot{
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 13px;
+}
+/* ----------------------------------小尺寸畫面 */
+@media(max-width:1250px){
+    .navigation{
+        width: 100%;
+    }
+    .tdt{
+        left:10px;
+    }
+    .attraction{
+        width: 90%;
+    }
+    .booking_form {
+        width: 100%;
+    }
+    hr{
+        margin: 0 9px;
+    }
+}
+@media(max-width:1080px){
+    .attraction{
+        width: 100%;
+    }
+    .section{
+        flex-wrap: wrap;
+    }
+    .picture_container{
+        width: 100%;
+        height: 350px;
+    }
+    .picture{
+        margin: 0;
+    }
+    .profile{
+        width: 100%;
+        margin: 10px 10px 0 10px;
+    }
+    .booking_form{
+        width: 100%;
+    }
+    .slogan{
+        line-height: 24px;
+    }
+    .intro{
+        padding: 50px 0 0 0;
+    }
+    .intro_index,.intro_title{
+        padding: 0px 20px;
+    }
+    #transport{
+        margin-bottom: 134px;
+    }
+}
