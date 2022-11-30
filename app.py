@@ -15,7 +15,7 @@ app.secret_key="any string but secret"
 dbconfig = {
 	"host":"localhost",
 	"user":"root",
-	"password":"123456",
+	"password":"",
 	"database":"week09"
 }
 mydbpool = pooling.MySQLConnectionPool(
