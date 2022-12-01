@@ -258,12 +258,13 @@ html{
 .attraction{
     width: 1200px;
     flex:1;
+    margin-top: 40px;
 }
 .Bob{
     width:1200px;
     display: flex;
     align-items: center;
-    justify-content:center;
+    justify-content:space-around;
 }
 .test{
     width: 100%;
@@ -330,19 +331,15 @@ html{
         flex-wrap: wrap;
     }
     .ob{
-        width:50%;
-        margin: 0;
+        width:calc(50% - 30px);
     }
     .obin{       
-        padding: 15px 15px 0 15px;
         background-clip: content-box;
     }
     .title{
         width:100%;
     }
-    .details{
-        margin:0 15px 15px 15px;
-    }
+
 
 }
 @media(max-width:600px) {
@@ -350,13 +347,10 @@ html{
         flex-direction: column;
     }
     .ob{
-        width:100%;
-    }.obin{
-        padding: 20px 20px 0 20px;
+        width:calc(100% - 40px);
+        margin :15px 20px 0 20px;
     }
-    .details{
-        margin: 0 20px 20px 20px;
-    }
+
 
 }
 /*-----------------------------------------finish */
