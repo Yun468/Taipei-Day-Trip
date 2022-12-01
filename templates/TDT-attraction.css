@@ -366,6 +366,7 @@ hr{
     }
     .section{
         flex-wrap: wrap;
+        padding:0;
     }
     .picture_container{
         width: 100%;
