@@ -16,7 +16,7 @@ dbconfig = {
 	"host":"localhost",
 	"user":"root",
 	"password":"",
-	"database":"week09"
+	"database":"week"
 }
 mydbpool = pooling.MySQLConnectionPool(
 	pool_name = "mypool",

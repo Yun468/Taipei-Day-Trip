@@ -121,7 +121,6 @@ html{
     position:relative;
     height: 400px;
     width: 45%;
-    margin: 0 15px;
 }
 .picture{
     height: 100%;
@@ -159,6 +158,7 @@ html{
     display: flex;
     position:absolute;
     bottom: 10px;
+    flex-wrap: wrap;
 }
 input[name="picture"]{
     margin: 0 6px;
@@ -375,13 +375,16 @@ hr{
     }
     .profile{
         width: 100%;
-        margin: 10px 10px 0 10px;
+        margin: 20px 10px 0 10px;
     }
     .booking_form{
         width: 100%;
     }
     .slogan{
         line-height: 24px;
+    }
+    .picture{
+        border-radius: 0;
     }
     .intro{
         padding: 50px 0 0 0;
@@ -392,4 +395,5 @@ hr{
     #transport{
         margin-bottom: 134px;
     }
+
 }
