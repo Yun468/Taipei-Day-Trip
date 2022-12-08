@@ -177,7 +177,7 @@ input[name="picture"]:checked{
     opacity: 1;
 }
 
-/* --------------------------------------------- */
+/* ---------------------------------------------profile */
 .profile{
     width: 50%;
     margin: 0 15px;
@@ -357,7 +357,7 @@ hr{
     position: fixed;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 3;
     background-color: rgba(0, 0, 0, 0.25);
 }
 .sign_active{

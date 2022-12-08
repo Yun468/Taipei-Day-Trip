@@ -368,7 +368,7 @@ html{
     position: fixed;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 3;
     background-color: rgba(0, 0, 0, 0.25);
 }
 .sign_active{
@@ -468,7 +468,7 @@ html{
     filter: brightness(0.3);
 }
 
-
+/* ----------------------------------------小螢幕 */
 @media(max-width:1250px){
     .navigation{
         width: 100%;
