@@ -363,7 +363,7 @@ hr{
 .sign_active{
     display: flex;
 }
-.sign_bar_hide,.sign_closed_hide{
+.sign_bar_hide{
     display: none;
 }
 .sign_bar{
@@ -399,6 +399,27 @@ hr{
     font-weight: 500;
     font-size: 16px;
     color: #757575;
+}
+.passwordeyeO,.passwordeyeC{
+    display: none;
+    transform: translate(300px, 135px);
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+.passwordeyeO{
+    background-image: url("eye_open.png");
+}
+.passwordeyeC{
+    background-image: url("eye_closed.png");
+}
+.signup_eye{
+    transform: translate(300px,195px);
+}
+.eyeactive{
+    display: block;
 }
 .sign_button{
     width: 312px;
@@ -456,6 +477,7 @@ hr{
 .sign_closed:hover{
     filter: brightness(0.3);
 }
+
 /* ----------------------------------小尺寸畫面 */
 @media(max-width:1250px){
     .navigation{

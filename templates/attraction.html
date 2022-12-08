@@ -10,7 +10,7 @@
     <div class = "Navi">
         <div class = "Navigation">
             <div class = navigation>
-                <div class = "tdt">台北一日遊</div>
+                <div class = "tdt" onclick = goHome()>台北一日遊</div>
                 <div class = "Frame2">
                     <div class = "Fram1">
                         <div class = "forNav">
@@ -94,7 +94,7 @@
     <div class="sign">
         <div class="sign_closed" onclick = signClosed()></div>
         <div class="sign_bar">
-            <div class="sign_bar_top"></div>
+            <div class="sign_bar_top"><span class="passwordeyeO eyeactive" onclick = eyeSwitch()></span><span class="passwordeyeC" onclick = eyeSwitch()></span></div>
             <div class="sign_bar_title">會員登入帳號</div>
             <form id="signinform">
                 <input placeholder="輸入電子信箱" class="sign_text"/>
@@ -107,9 +107,8 @@
             </div>
         </div>
 
-        <div class="sign_closed sign_closed_hide" onclick = signClosed()></div>
-        <div class="sign_bar  sign_bar_hide">
-            <div class="sign_bar_top"></div>
+        <div class="sign_bar sign_bar_hide">
+            <div class="sign_bar_top"><span class="passwordeyeO signup_eye" onclick = eyeSwitch()></span><span class="passwordeyeC signup_eye" onclick = eyeSwitch()></span></div>
             <div class="sign_bar_title">註冊會員帳號</div>
             <form action="/api/user" method="post" id="signupform">
                 <input placeholder="輸入姓名" class="sign_text" name="name" />
@@ -122,7 +121,7 @@
                 <div class="sign_switch2"  onclick = signswitch()>點此登入</div>
             </div>
         </div>
-    </div>  
+    </div>    
    </body>
    <script src="{{ url_for('static',filename='login.js')}}"></script>
    <script src="{{ url_for('static',filename='attraction.js')}}"></script>
