@@ -30,7 +30,10 @@ function signClosed(){
     for(x=0; x<forms.length; x++){
         forms[x].value  ="";
     }
-
+    let signupButtton = document.querySelector("#sign_up_button");
+    signupButtton.value = "註冊帳戶";
+    let signinButtton = document.querySelector("#sign_in_button");
+    signinButtton.value = "登入帳戶";
 }
 //signBar切換
 function signswitch(){
