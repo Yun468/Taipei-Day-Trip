@@ -1,3 +1,8 @@
+from flask import Flask
+import mysql.connector
+from mysql.connector import pooling
+from difflib import *
+from flask_cors import CORS
 dbconfig = {
 	"host":"localhost",
 	"user":"",
