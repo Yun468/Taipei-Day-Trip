@@ -3,10 +3,12 @@ import mysql.connector
 from mysql.connector import pooling
 from difflib import *
 from flask_cors import CORS
+import apis.mysqlconnect
  
-api2 = Blueprint('api2',__name__,)
-
-@api2.route("/api/attractions")
+api1 = Blueprint('api1',__name__,)
+dbconfig = apis.mysqlconnect.dbconfig
+mydbpool = apis.mysqlconnect.mydbpool
+@api1.route("/api/attractions")
 def apiattraction():
 	mydb = mydbpool.get_connection()		# Get connection_object from a pool :mydb
 	mycursor = mydb.cursor()
@@ -141,7 +143,7 @@ def apiattraction():
 	attractions = jsonify(attractions)
 	return 	attractions
 
-@api2.route("/api/attraction/<attractionId>")
+@api1.route("/api/attraction/<attractionId>")
 def apiattractionid(attractionId):
 	mydb = mydbpool.get_connection()
 	mycursor = mydb.cursor()
@@ -172,7 +174,7 @@ def apiattractionid(attractionId):
 	mydb.close()
 	return attraction
 
-@api2.route("/api/categories")
+@api1.route("/api/categories")
 def categories():
 	mydb = mydbpool.get_connection()		# Get connection_object from a pool :mydb
 	mycursor = mydb.cursor()

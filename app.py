@@ -3,8 +3,8 @@ import mysql.connector
 from mysql.connector import pooling
 from difflib import *
 from flask_cors import CORS
-from apis.mysqlconnect import api1
-from apis.attractions import api2
+import apis.mysqlconnect
+from apis.attractions import api1
 from flask_restful import Api, Resource
 import jwt
 import time
@@ -18,20 +18,9 @@ CORS(app)
 app.secret_key="any string but secret"
 Api = Api(app)
 
-# dbconfig = {
-# 	"host":"localhost",
-# 	"user":"",
-# 	"password":"",
-# 	"database":"week"
-# }
-# mydbpool = pooling.MySQLConnectionPool(
-# 	pool_name = "mypool",
-# 	pool_size = 5,
-#     pool_reset_session = True,
-#     **dbconfig
-# ) 
 app.register_blueprint(api1)
-app.register_blueprint(api2)
+dbconfig = apis.mysqlconnect.dbconfig
+mydbpool = apis.mysqlconnect.mydbpool
 ######################################################
 
 @app.route("/api/user", methods=["POST"])
