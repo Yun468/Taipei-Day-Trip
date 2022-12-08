@@ -93,20 +93,26 @@ html{
     gap: 10px;
     flex: none;
     flex-grow: 0;
+    
 }
-.button{
+.forNav_hide{
+    display: none;
+}
+.forNav-1{
+    flex: none;
+    flex-grow: 0;
     height: 14px;
-    /* Body - Med 16(13.3) */
     font-family: 'Noto Sans TC';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 14px;
     color: #666666;
-    flex: none;
-    flex-grow: 0;
+    cursor: pointer;
 }
-
+.forNav-1:hover{
+    filter: brightness(0.3);
+}
 /* ---------------------------------- attraction */
 .attraction{
     width: 1200px;
