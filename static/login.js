@@ -92,9 +92,13 @@ signupButtton.addEventListener("click",()=>{
     .then(result=>{
         console.log(result);
         if(result["ok"] == true){
-            reminder2.style = "display:flex"
-            reminder2.innerHTML = "註冊成功，網頁將於3秒後自動跳轉";
-            // location.reload();
+            reminder2.style = "display:flex";
+            reminder2.innerHTML = "註冊成功，請返回登入頁面重新登入";
+        }
+        else{
+            let message = result["message"];
+            reminder2.style = "display:flex";
+            reminder2.innerHTML = message
         }
     })
 })
