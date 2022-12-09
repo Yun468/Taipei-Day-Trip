@@ -42,7 +42,6 @@ html{
     justify-content: center;
     width: 100%;
     height: 54px;
-    /* Additional Color/White */
     background: #FFFFFF;
     position:fixed;
     z-index:1;
@@ -57,31 +56,25 @@ html{
     position: absolute;
     width: 150px;
     height: 34px;
-    /* Header 2 - Bold 30(34) */
     font-family: 'Noto Sans TC';
     font-style: normal;
     font-weight: 700;
     font-size: 30px;
     line-height: 34px;
-    /* identical to box height, or 113% */
-    /* Primary Color/Cyan 70 */
     color: #448899;
+    cursor: pointer;
 }
 .Frame2{
-    /* Auto layout */
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: flex-start;
-        /* padding: 0px; */
     position: absolute;
     width: 175px;
     height: 34px;
     right: 0px;
-        /* bottom: 0px; */
 }
 .Fram1{
-    /* Auto layout */
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -89,40 +82,37 @@ html{
     padding: 0px;
     width: 175px;
     height: 34px;
-    /* Inside auto layout */
     flex: none;
     flex-grow: 0;
 }
 .forNav{
-    /* Auto layout */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     margin : 10px;
-        /* padding: 10px; */
     gap: 10px;
-        /* width: 84px;
-        height: 34px; */
-    /* Inside auto layout */
     flex: none;
     flex-grow: 0;
     
 }
-.BUTTON{
+.forNav_hide{
+    display: none;
+}
+.forNav-1{
+    flex: none;
+    flex-grow: 0;
     height: 14px;
-    /* Body - Med 16(13.3) */
     font-family: 'Noto Sans TC';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 14px;
-    /* identical to box height, or 83% */
-    /* Secondary Color/Gray 70 */
     color: #666666;
-    /* Inside auto layout */
-    flex: none;
-    flex-grow: 0;
+    cursor: pointer;
+}
+.forNav-1:hover{
+    filter: brightness(0.3);
 }
 /* ----------------------------------------weclome */
 .HeroSectoin{
@@ -130,7 +120,6 @@ html{
     background-size: cover;
     background-repeat: no-repeat;
     background-clip:inherit;
-    /* Auto layout */
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -140,12 +129,10 @@ html{
     flex-shrink: 0;
     overflow: hidden;
     z-index: -10;
-    /* Light | Cyan Gradient (135deg) */
-    /* background: linear-gradient(135deg, #AADDEE 0%, #66AABB 100%); */
+
 }
 /* ----------------------------------------slogan*/
 .slogan{
-    /* Auto layout */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -155,7 +142,6 @@ html{
 .slo{
     width: 1180px;
     height: 149px;
-    /* Inside auto layout */
     flex: none;
     flex-grow: 0;
 }
@@ -170,17 +156,13 @@ html{
     height: 41px;
     left: 0px;
     top: 0px;
-    /* Header 1 - Bold 28(24) */
     font-family: 'Noto Sans TC';
     font-weight: 700;
     font-size: 28px;
     line-height: 24px;
-    /* or 86% */
     display: flex;
     align-items: center;
-    /* Secondary Color/Gray 10 */
     color: #F8F8F8;
-    /* Text Shadow */
     text-shadow: 0px 0px 30px #AABBCC;
 }
 .text2{
@@ -189,15 +171,12 @@ html{
     height: 22px;
     left: 0px;
     top: 56px;
-    /* Body - Bold 16(13.3) */
     font-family: 'Noto Sans TC';
     font-weight: 700;
     font-size: 16px;
     line-height: 13px;
-    /* or 83% */
     display: flex;
     align-items: center;
-    /* Secondary Color/Gray 10 */
     color: #F8F8F8;
 }
 .search{
@@ -230,6 +209,10 @@ html{
     width: 60px;
     height: 46px;
     background:url(bg.png);
+    cursor: pointer;
+}
+.btn:hover{
+    filter: brightness(1.1);
 }
 .menu_open{
     display: none;
@@ -250,6 +233,7 @@ html{
     height: 20px;
     padding: 10px 15px;
     gap:4px;
+    cursor: pointer;
 }
 .cate:hover{
     background-color: #E8E8E8;
@@ -281,6 +265,7 @@ html{
     display:flex;
     flex-direction: column-reverse;
     height: 197px;
+    cursor: pointer;
 }
 
 .bigimage{
@@ -316,6 +301,7 @@ html{
     height: 25px;
     display: flex;
     padding: 10px;
+    cursor: pointer;
 }
 .det1,.det2{
     width: 50%;
@@ -324,8 +310,7 @@ html{
     text-align: right;
 }
 
-@media(max-width:1280px) {
-
+@media(max-width:1250px) {
     .Bob{
         width:100%;
         flex-wrap: wrap;
@@ -339,8 +324,6 @@ html{
     .title{
         width:100%;
     }
-
-
 }
 @media(max-width:600px) {
     .Bob{
@@ -350,8 +333,6 @@ html{
         width:calc(100% - 40px);
         margin :15px 20px 0 20px;
     }
-
-
 }
 /*-----------------------------------------finish */
 .finish{
@@ -365,14 +346,12 @@ html{
 }
 /* ----------------------------------------footer */
 .footer{
-    /* Auto layout */
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 104px;
     flex-shrink: 0;
-    /* Gray 700 */
     background: #757575;
 }
 .foot{
@@ -382,8 +361,136 @@ html{
     line-height: 13px;
     color: #FFFFFF
 }
+/* ----------------------------------------signIn */
+.sign{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+.sign_active{
+    display: flex;
+}
+.sign_bar_hide{
+    display: none;
+}
+.sign_bar{
+    width: 340px;
+    background-color: #FFFFFF;
+    margin-top: 64px;
+}
+.sign_bar_top{
+    height: 10px;
+    background:linear-gradient(270deg, #337788 0%, #66AABB 100%);
+}
+.sign_bar_title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 310px;
+    height: 27px;
+    margin: 15px 15px 0 15px;
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 24px;
+    color: #666666;
+}
+.sign_text{
+    width: 280px;
+    height: 17px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px 15px 0 15px;
+    font-family: 'Noto Sans TC';
+    font-weight: 500;
+    font-size: 16px;
+    color: #757575;
+}
+.passwordeyeO,.passwordeyeC{
+    display: none;
+    transform: translate(300px, 135px);
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+.passwordeyeO{
+    background-image: url("eye_open.png");
+}
+.passwordeyeC{
+    background-image: url("eye_closed.png");
+}
+.signup_eye{
+    transform: translate(300px,195px);
+}
+.eyeactive{
+    display: block;
+}
+.sign_button{
+    width: 312px;
+    height: 49px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding: 0px;
+    margin: 10px 15px 0 15px;
+    font-family: 'Noto Sans TC';
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 16px;
+    cursor: pointer;
+    color: #FFFFFF;
+    background: #448899;
+}
+.sign_button:hover{
+    filter: brightness(1.1);
+}
+.reminder1,.reminder2{
+    display: none;
+    justify-content: center;
+    height: 22px;
+    margin: 5px 0 15px 0;
+    font-weight: 500;
+    font-size: 18px;
+    color: red;
+}
+.sign_switch1{
+    display: flex;
+    justify-content: center;
+    height: 22px;
+    margin: 10px 0 15px 0;
+    font-weight: 500;
+    font-size: 16px;
+}
+.sign_switch2{
+    display: inline;
+}
+.sign_switch2:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.sign_closed{
+    position: relative;
+    top:107px;
+    left: 148px;
+    background-image: url("icon_close.png");
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
 
+}
+.sign_closed:hover{
+    filter: brightness(0.3);
+}
 
+/* ----------------------------------------小螢幕 */
 @media(max-width:1250px){
     .navigation{
         width: 100%;
@@ -411,6 +518,12 @@ html{
     .search_bar{
         padding: 0 0 0 20px;
     }
+    .main_slogan{
+        width: 100%;
+    }
+    .menu_open{
+        margin: 0 0 0 20px;
+    }
     .attraction{
         width:100%;
     }
@@ -422,6 +535,10 @@ html{
     }
     .search_bar{
         width:80%;
+        min-width: 320px;
+    }
+    .menu{
+        width: calc(80% + 16px);
         min-width: 320px;
     }
 }

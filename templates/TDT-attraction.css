@@ -93,20 +93,26 @@ html{
     gap: 10px;
     flex: none;
     flex-grow: 0;
+    
 }
-.button{
+.forNav_hide{
+    display: none;
+}
+.forNav-1{
+    flex: none;
+    flex-grow: 0;
     height: 14px;
-    /* Body - Med 16(13.3) */
     font-family: 'Noto Sans TC';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 14px;
     color: #666666;
-    flex: none;
-    flex-grow: 0;
+    cursor: pointer;
 }
-
+.forNav-1:hover{
+    filter: brightness(0.3);
+}
 /* ---------------------------------- attraction */
 .attraction{
     width: 1200px;
@@ -341,6 +347,114 @@ hr{
     font-size: 16px;
     line-height: 13px;
     color: #FFFFFF;
+}
+
+/* ----------------------------------------signIn */
+.sign{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+.sign_active{
+    display: flex;
+}
+.sign_bar_hide,.sign_closed_hide{
+    display: none;
+}
+.sign_bar{
+    width: 340px;
+    background-color: #FFFFFF;
+    margin-top: 64px;
+}
+.sign_bar_top{
+    height: 10px;
+    background:linear-gradient(270deg, #337788 0%, #66AABB 100%);
+}
+.sign_bar_title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 310px;
+    height: 27px;
+    margin: 15px 15px 0 15px;
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 24px;
+    color: #666666;
+}
+.sign_text{
+    width: 280px;
+    height: 17px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px 15px 0 15px;
+    font-family: 'Noto Sans TC';
+    font-weight: 500;
+    font-size: 16px;
+    color: #757575;
+}
+.sign_button{
+    width: 312px;
+    height: 49px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding: 0px;
+    margin: 10px 15px 0 15px;
+    font-family: 'Noto Sans TC';
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 16px;
+    cursor: pointer;
+    color: #FFFFFF;
+    background: #448899;
+}
+.sign_button:hover{
+    filter: brightness(1.1);
+}
+.reminder1,.reminder2{
+    display: none;
+    justify-content: center;
+    height: 22px;
+    margin: 5px 0 15px 0;
+    font-weight: 500;
+    font-size: 18px;
+    color: red;
+}
+.sign_switch1{
+    display: flex;
+    justify-content: center;
+    height: 22px;
+    margin: 10px 0 15px 0;
+    font-weight: 500;
+    font-size: 16px;
+}
+.sign_switch2{
+    display: inline;
+}
+.sign_switch2:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.sign_closed{
+    position: relative;
+    top:107px;
+    left: 148px;
+    background-image: url("icon_close.png");
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+
+}
+.sign_closed:hover{
+    filter: brightness(0.3);
 }
 /* ----------------------------------小尺寸畫面 */
 @media(max-width:1250px){
