@@ -4,10 +4,10 @@ from mysql.connector import pooling
 from difflib import *
 from flask_cors import CORS
 
-MySQL_URL = "testdb.ap-northeast-1.rds.amazonaws.com"
-MySQL_USER = "admin"
-MySQL_PWD = "admin"
-MySQL_DATABASE = "test_db"
+MySQL_URL = "localhost"
+MySQL_USER = "root"
+MySQL_PWD = "123456"
+MySQL_DATABASE = "week"
 
 dbconfig = {
 	"host":MySQL_URL,
