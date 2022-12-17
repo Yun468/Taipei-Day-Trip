@@ -66,6 +66,7 @@ fetch(url).then(res =>{
 let deleteButton = document.querySelector(".delete");
 deleteButton.addEventListener("click",()=>{
 let url = "http://35.76.166.101:3000/api/booking";
+
     let attractionId = deleteButton.dataset.attractionid
 
     fetch(url, {
@@ -81,13 +82,7 @@ let url = "http://35.76.166.101:3000/api/booking";
     }).then(res =>{
         res = res.json();
         return res
-    }).then(result =>{
-        let url = "http://35.76.166.101:3000/api/booking";
-        fetch(url).then(res =>{
-            res = res.json();
-            return res
-        })
-        .then(result =>{                        //result = 行程
+    }).then(result =>{                      //result = 行程
             //寫入使用者姓名
             if(result["ok"] == true){
                 let user = document.querySelector(".user");
@@ -109,4 +104,4 @@ let url = "http://35.76.166.101:3000/api/booking";
 
         })
     })
-})
+

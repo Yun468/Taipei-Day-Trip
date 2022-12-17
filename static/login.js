@@ -6,7 +6,6 @@ function goHome(){
 //開視窗載入
     //檢查登入狀態
     let loginUrl = "http://35.76.166.101:3000/api/user/auth";
-    // let loginUrl = "http://127.0.0.1:3000/api/user/auth";
     
     fetch(loginUrl)
     .then(res =>{
@@ -15,7 +14,6 @@ function goHome(){
     })
     .then(result =>{
         let bookingUrl = "http://35.76.166.101:3000/api/user/auth"
-        // let bookingUrl = "http://127.0.0.1:3000/booking";
         if (result["data"] != null){                 //  result = 使用者資訊;           
             let userData = "userData = " + JSON.stringify(result);     
             document.cookie =  userData;            //將使用者資訊存放到cookie供使用
@@ -201,7 +199,6 @@ signinButtton.addEventListener("click",()=>{
     }
     //登入帳號
     let url = "http://35.76.166.101:3000/api/user/auth";
-    // let url = "http://127.0.0.1:3000/api/user/auth"
     fetch(url, {
         method:"PUT",
         body: JSON.stringify({
@@ -256,6 +253,5 @@ signOut.addEventListener("click",()=>{
 let reserveJourney = document.querySelectorAll(".forNav-1")[0]
 reserveJourney.addEventListener("click",()=>{
     document.location.href = "http://35.76.166.101:3000/booking"
-    // document.location.href = "http://127.0.0.1:3000/booking";
 })
 
