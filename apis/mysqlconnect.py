@@ -12,7 +12,7 @@ MySQL_DATABASE =""
 dbconfig = {
 	"host":MySQL_URL,
 	"user":MySQL_USER,
-	"password":MySQL_PWD ,
+	"password":MySQL_PWD,
 	"database":MySQL_DATABASE
 }
 mydbpool = pooling.MySQLConnectionPool(

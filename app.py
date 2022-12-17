@@ -99,37 +99,43 @@ class Booking(Resource):
 			mycursor = mydb.cursor()
 			req = request.get_json()
 			login_token = self.cookies.get("login_token")
-			if login_token == None:
-				json_data = {
-					"error": True,
-					"message": "尚未登入帳號"
-				}
-			else:
-				login_token = jwt.decode(login_token, 'secret', algorithms=['HS256'])
-				if (login_token["ok"] == True) and (login_token["id"] != None):
-					userid = login_token["id"]
-					attractionId = int(req["id"])
-					time = "moring"
-					price = req["price"]
-					if price == 2500:
-						time = "afternoon"	
-					date = req["date"]
-					if date == "":
-						json_data = {
-							"error": True,
-							"message": "請選擇出發日期"
-						}
-					else:												#定義好userid,attractionId,date,time,price，寫入資料表booking
-						sql = "INSERT INTO booking (userid,attractionId,date,time,price) VALUES (%s,%s,%s,%s,%s) "
-						val = (userid,attractionId,date,time,price)
-						mycursor.execute(sql,val)
-						mydb.commit()
-						json_data = {"ok" : True}
-				else:
+			try:
+				if login_token == None:
 					json_data = {
 						"error": True,
 						"message": "尚未登入帳號"
 					}
+				else:
+					login_token = jwt.decode(login_token, 'secret', algorithms=['HS256'])
+					if (login_token["ok"] == True) and (login_token["id"] != None):
+						userid = login_token["id"]
+						attractionId = int(req["id"])
+						time = "moring"
+						price = req["price"]
+						if price == 2500:
+							time = "afternoon"	
+						date = req["date"]
+						if date == "":
+							json_data = {
+								"error": True,
+								"message": "請選擇出發日期"
+							}
+						else:												#定義好userid,attractionId,date,time,price，寫入資料表booking
+							sql = "INSERT INTO booking (userid,attractionId,date,time,price) VALUES (%s,%s,%s,%s,%s) "
+							val = (userid,attractionId,date,time,price)
+							mycursor.execute(sql,val)
+							mydb.commit()
+							json_data = {"ok" : True}
+					else:
+						json_data = {
+							"error": True,
+							"message": "尚未登入帳號"
+						}
+			except:
+				json_data = {
+					"error": True,
+					"message": "資料庫連線錯誤啦"
+				}
 		except:
 			json_data = {
 				"error": True,

@@ -141,6 +141,7 @@
         }
         else{
             let url = "http://35.76.166.101:3000/api/booking";
+            // let url = "http://127.0.0.1:3000/api/booking";
 
             let id = location.href.split("/")[4].split("?")[0];
             let date = document.getElementById("date").value;
@@ -173,7 +174,6 @@
                 return res
             })
             .then(result =>{
-                console.log(result)
                 if(result["ok"] == true){
                     alert("預定成功，稍後請至 *預定行程* 頁面付款")
                 }else if(result["message"] == "尚未登入帳號"){
