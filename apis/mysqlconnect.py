@@ -5,8 +5,8 @@ from difflib import *
 from flask_cors import CORS
 dbconfig = {
 	"host":"localhost",
-	"user":"",
-	"password":"",
+	"user":"root",
+	"password":"123456",
 	"database":"week"
 }
 mydbpool = pooling.MySQLConnectionPool(

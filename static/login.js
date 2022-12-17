@@ -12,12 +12,21 @@ function goHome(){
         return res
     })
     .then(result =>{
-        const userData = result;                                    // userData = 使用者資料
-        if (userData != null){
-            let signOpen = (document.querySelectorAll(".forNav"))[1];
-            let signOut = document.querySelector(".forNav_hide");
-            signOut.classList.remove("forNav_hide")
-            signOpen.classList.add("forNav_hide")
+        let bookingUrl = "http://35.76.166.101:3000/booking";
+        if (result["data"] != null){                 //  result = 使用者資訊;           
+            let userData = "userData = " + JSON.stringify(result);     
+            document.cookie =  userData;            //將使用者資訊存放到cookie供使用
+            if((location.href) != bookingUrl){
+                let signOpen = (document.querySelectorAll(".forNav"))[1];
+                let signOut = document.querySelector(".forNav_hide");
+                signOut.classList.remove("forNav_hide")
+                signOpen.classList.add("forNav_hide")
+            };
+            
+        }else{
+            if((location.href) == bookingUrl){
+                document.location.href = "http://35.76.166.101:3000/"
+            }
         }
     })
 // 登入及註冊介面
@@ -218,6 +227,7 @@ signinButtton.addEventListener("click",()=>{
 let signOut = (document.querySelectorAll(".forNav-1"))[2];
 signOut.addEventListener("click",()=>{
     let url = "http://35.76.166.101:3000/api/user/auth";
+
     fetch(url, {
         method:"DELETE"
     })
@@ -227,7 +237,20 @@ signOut.addEventListener("click",()=>{
     })
     .then(result=>{
         if(result["ok"] == true){
-            location.reload();
+            userData = null;
+            let bookingUrl = "http://35.76.166.101:3000/booking"
+            if((location.href) == bookingUrl){
+                document.location.href = "http://35.76.166.101:3000/"
+            }else{
+                location.reload();
+            }
         }
     })
 })
+
+//切換至「預定行程」
+let reserveJourney = document.querySelectorAll(".forNav-1")[0]
+reserveJourney.addEventListener("click",()=>{
+    document.location.href = "http://35.76.166.101:3000/booking"
+})
+

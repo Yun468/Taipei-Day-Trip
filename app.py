@@ -5,6 +5,7 @@ from difflib import *
 from flask_cors import CORS
 import apis.mysqlconnect
 from apis.attractions import api1
+from apis.login import api2,Auth
 from flask_restful import Api, Resource
 import jwt
 import time
@@ -19,183 +20,182 @@ app.secret_key="any string but secret"
 Api = Api(app)
 
 app.register_blueprint(api1)
+app.register_blueprint(api2)
 dbconfig = apis.mysqlconnect.dbconfig
 mydbpool = apis.mysqlconnect.mydbpool
+Api.add_resource(Auth, "/api/user/auth")
 ######################################################
 
-@app.route("/api/user", methods=["POST"])
-def user():
-	mydb = mydbpool.get_connection()
-	mycursor = mydb.cursor()
-	req = request.get_json()
-	name = req["name"]
-	email = req["email"]
-	password = req["password"]
-	json_data = {}
-	try:
-		sql = "SELECT email FROM userdata where email = %s"
-		val = (email,)
-		mycursor.execute(sql,val)
-		result = mycursor.fetchone()
-		if result == None:
-			sql = "INSERT INTO userdata (name,email,password) VALUES (%s,%s,%s)"
-			val = (name,email,password)
-			mycursor.execute(sql,val)
-			mydb.commit()
-			json_data = {
-				"ok": True
-			}
-		else:
-			json_data = {
-				"error": True,
-				"message": "此信箱已被註冊"
-			}
-	except:
-		json_data = {
-			"error": True,
-			"message": "資料庫連線錯誤"
-		}
-	mycursor.close()
-	mydb.close()
-	response = jsonify(json_data)
-	return response
-
-class Auth(Resource):
-	def login(self):
-		mydb = mydbpool.get_connection()
-		mycursor = mydb.cursor()
-		req = self.get_json()
-		email = req["email"]
-		password = req["password"]
-		login_token = None
-		try:
-			sql = "SELECT id,name,email,password FROM userdata where email = %s"
-			val = (email,)
-			mycursor.execute(sql,val)
-			result = mycursor.fetchone()
-			if result == None:
-				json_data = {
-					"error": True,
-					"message": "此信箱尚未註冊"
-				}
-			else:
-				if password == result[3]:
-					json_data = {
-						"ok": True
-					}
-					now = time.time()				#單位：秒
-					expiretime = now + (7*86400)
-					payload = {
-						"ok":True,
-						"id":result[0],
-						"exp":expiretime
-					}
-					login_token = jwt.encode(
-						payload = payload, 
-						key = "secret", 
-						algorithm="HS256"
-					)
-				else:
-					json_data = {
-						"error": True,
-						"message": "密碼錯誤"
-					}
-		except:
-			json_data = {
-				"error": True,
-				"message": "資料庫連線錯誤"
-			}
-		finally:
-			mycursor.close()
-			mydb.close()
-			if login_token != None:
-				json_data = jsonify(json_data)
-				response = make_response(json_data)
-				response.set_cookie("login_token",login_token)
-			else:
-				response = jsonify(json_data)
-			return response
-
-	def get_current_userdata(self):
+class Booking(Resource):
+	def reserve(self):
+		json_data = []
 		try:
 			mydb = mydbpool.get_connection()
 			mycursor = mydb.cursor()
 			login_token = self.cookies.get("login_token")
-			login_token = jwt.decode(login_token, 'secret', algorithms=['HS256'])
-			if (login_token["ok"] == True) and (login_token["id"] != None):
-				try:
-					id = login_token["id"]
-					sql = "SELECT id,name,email FROM userdata where id = %s"
-					val = (id,)
+			if login_token == None:
+				json_data = {
+					"error": True,
+					"message": "尚未登入帳號"
+				}
+			else:
+				login_token = jwt.decode(login_token, 'secret', algorithms=['HS256'])
+				if (login_token["ok"] == True) and (login_token["id"] != None):			#看有沒有行程
+					userid = login_token["id"]
+					sql = "SELECT attractionId,date,time,price FROM booking where userid = %s "		
+					val = (userid,)
 					mycursor.execute(sql,val)
 					result = mycursor.fetchone()
 					if result == None:
-						json_data = None
-					else:
-						now = time.time()				#單位：秒
-						expiretime = now + (7*86400)
-						payload = {
-							"ok":True,
-							"id":result[0],
-							"exp":expiretime
-						}
-						login_token = jwt.encode(
-							payload = payload, 
-							key = "secret", 
-							algorithm="HS256"
-						)
 						json_data = {
-										"data": {
-											"id": result[0],
-											"name": result[1],
-											"email": result[2]
-										}
-									}
-				except:
+							"data":None
+						}
+					else:
+						attractionId = result[0]
+						date = result[1]
+						time = result[2]
+						price = result[3]
+						sql = "SELECT data.id,data.name,data.address,image_url.images FROM data INNER JOIN image_url ON data.newid = image_url.ID WHERE data.id = %s"
+						val = (attractionId,)
+						mycursor.execute(sql,val)
+						result1 = mycursor.fetchone()
+						id = result1[0]
+						name = result1[1]
+						address = result1[2]
+						image = (result1[3].split(","))[0].replace('[',"")
+						json_data = {
+							"data": {
+								"attraction": {
+									"id": attractionId,
+									"name": name,
+									"address": address,
+									"image": image
+								},
+								"date": date,
+								"time": time,
+								"price": price
+							}
+						}
+				else:
 					json_data = {
 						"error": True,
-						"message": "伺服器連線錯誤"
-					}			
-			else:
-				json_data = None
-		except:
-			json_data = None
-		finally:
-			mycursor.close()
-			mydb.close()
-			if login_token != None:
-				json_data = jsonify(json_data)
-				response = make_response(json_data)
-				response.set_cookie("login_token",login_token)
-			else:
-				response = jsonify(json_data)
-			return response
-
-	def logout(self):
-		try:
-			json_data = {"ok" : True}
-			json_data = jsonify(json_data)
-			response = make_response(json_data)
-			response.set_cookie("login_token","",expires=0)
+						"message": "尚未登入帳號"
+					}
 		except:
 			json_data = {
 				"error": True,
-				"message": "伺服器連線錯誤"
+				"message": "資料庫連線錯誤，請聯絡客服人員"
 			}
-			json_data = jsonify(json_data)	
 		finally:
+			mydb.close()
+			mycursor.close()
+			response = jsonify(json_data)
+			return response
+	
+	def establish(self):
+		json_data = []
+		try:
+			mydb = mydbpool.get_connection()
+			mycursor = mydb.cursor()
+			req = request.get_json()
+			login_token = self.cookies.get("login_token")
+			if login_token == None:
+				json_data = {
+					"error": True,
+					"message": "尚未登入帳號"
+				}
+			else:
+				login_token = jwt.decode(login_token, 'secret', algorithms=['HS256'])
+				if (login_token["ok"] == True) and (login_token["id"] != None):
+					userid = login_token["id"]
+					attractionId = int(req["id"])
+					time = "moring"
+					price = req["price"]
+					if price == 2500:
+						time = "afternoon"	
+					date = req["date"]
+					if date == "":
+						json_data = {
+							"error": True,
+							"message": "請選擇出發日期"
+						}
+					else:												#定義好userid,attractionId,date,time,price，寫入資料表booking
+						sql = "INSERT INTO booking (userid,attractionId,date,time,price) VALUES (%s,%s,%s,%s,%s) "
+						val = (userid,attractionId,date,time,price)
+						mycursor.execute(sql,val)
+						mydb.commit()
+						json_data = {"ok" : True}
+				else:
+					json_data = {
+						"error": True,
+						"message": "尚未登入帳號"
+					}
+		except:
+			json_data = {
+				"error": True,
+				"message": "資料庫連線錯誤，請聯絡客服人員"
+			}
+		finally:
+			mydb.close()
+			mycursor.close()
+			response = jsonify(json_data)
 			return response
 
-@app.route("/api/user/auth", methods=["GET","PUT","DELETE"])
-def user_auth():
+	def delete_est(self):
+		json_data = []
+		try:
+			mydb = mydbpool.get_connection()
+			mycursor = mydb.cursor()
+			login_token = self.cookies.get("login_token")
+			attractionId = self.get_json()["attractionId"]
+			if login_token == None:
+				json_data = {
+					"error": True,
+					"message": "尚未登入帳號"
+				}
+			else:
+				login_token = jwt.decode(login_token, 'secret', algorithms=['HS256'])
+				if (login_token["ok"] == True) and (login_token["id"] != None):			#刪行程
+					try:
+						userid = login_token["id"]
+						sql = "DELETE FROM booking WHERE userid = %s and attractionId = %s "		
+						val = (userid,attractionId)
+						mycursor.execute(sql,val)
+						mydb.commit()
+						json_data = {
+							"ok" : True
+						}
+					except:
+						json_data = {
+							"error": True,
+							"message": "資料庫連線錯誤"
+						}
+				else:
+					json_data = {
+						"error": True,
+						"message": "尚未登入帳號"
+					}
+		except:
+			json_data = {
+				"error": True,
+				"message": "資料庫連線錯誤，請聯絡客服人員"
+			}
+		finally:
+			mydb.close()
+			mycursor.close()
+			response = jsonify(json_data)
+			return response
+			
+
+@app.route("/api/booking", methods=["GET","POST","DELETE"])
+def api_booking():
 	if request.method == "GET":
-		response = Auth.get_current_userdata(request)
-	elif request.method == "PUT":
-		response = Auth.login(request)
+		response = Booking.reserve(request)
+	elif request.method == "POST":
+		response = Booking.establish(request)
 	else:
-		response = Auth.logout(request)
+		response = Booking.delete_est(request)
 	return response
-Api.add_resource(Auth, "/api/user/auth")
 
 ################################################
 

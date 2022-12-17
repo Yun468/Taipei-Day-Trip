@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta name='viewport' content='width=device-width',initial-scale=1.0/>
+      <meta charset='utf-8'/>
+      <title>Taipei-Day-Trip</title>
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='TDT-booking.css')}}"/>
+   </head>
+   <body class = "index">
+    <div class = "Navi">
+        <div class = "Navigation">
+            <div class = navigation>
+                <div class = "tdt" onclick = goHome()>台北一日遊</div>
+                <div class = "Frame2">
+                    <div class = "Fram1">
+                        <div class = "forNav">
+                            <div class = "forNav-1">預定行程</div>
+                        </div>
+                        <div class = "forNav">
+                            <div class = "forNav-1 forNav_hide" onclick = signOpen()>登入/註冊</div>
+                        </div>
+                        <div class = "forNav">
+                            <div class = "forNav-1" >登出帳戶</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="navi_hr">
+    <div class = "headline">您好，<span class="user"></span>，待預定的行程如下：</div>
+    <div class="none_booking">目前沒有任何待預定的行程</div>
+    <div class="booking">
+        <div class="route">
+            <div class="section">
+                <div class="section_picture"></div>
+                <div class="info">
+                    <div class="info_title">台北一日遊：<span id = "title"></span></div>
+                    <div class="info_frame">日期：<sapn id="date"></sapn></div>
+                    <div class="info_frame">時間：<sapn id="time"></sapn></div>
+                    <div class="info_frame">費用：<sapn id="price"></sapn></div>
+                    <div class="info_frame" style="margin-bottom: 5px;">地點：<sapn id="place"></sapn></div>
+                </div>
+                <div class="delete"></div>
+            </div>
+        </div>
+    </div>
+    <form  method='post' action="/api/booking" name = "form_connect" style="display: none;">
+        <div class="form_index">
+            <hr class="form_hr">
+            <div class="form_title">您的聯絡資訊</div>
+            <div class="form_filed">聯絡姓名：<input type="text" class="form_filed_input" name="name"></div>
+            <div class="form_filed">聯絡信箱：<input type="text" class="form_filed_input" name="email"></div>
+            <div class="form_filed">手機號碼：<input type="text" class="form_filed_input" name="phone"></div>
+            <div class="connect_notice">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
+        </div>
+        <div class="form_index" method='post'>
+            <hr class="form_hr">
+            <div class="form_title">信用卡付款資訊</div>
+            <div class="form_filed">卡片號碼：<input type="text" class="form_filed_input" name="credit_card"></div>
+            <div class="form_filed">過期時間：<input type="text" class="form_filed_input" name="expiration"></div>
+            <div class="form_filed">驗證密碼：<input type="text" class="form_filed_input" name="verify_password"></div>
+        </div>
+        <div class="confirm">
+            <hr class="form_hr">
+            <div class="confirm_index">
+                <div>
+                    <div class="sum">總價：新台幣 <span id = "sum"></span> 元</div>
+                    <input class="booking_button" type="submit" value="確認訂購並付款" >
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class = "footer" style="flex:1">
+        <div class = "foot">COPYRIGHT © 2021 台北一日遊</div>
+    </div>
+    <div class="sign">
+        <div class="sign_closed" onclick = signClosed()></div>
+        <div class="sign_bar">
+            <div class="sign_bar_top"><span class="passwordeyeO eyeactive" onclick = eyeSwitch()></span><span class="passwordeyeC" onclick = eyeSwitch()></span></div>
+            <div class="sign_bar_title">會員登入帳號</div>
+            <form id="signinform">
+                <input placeholder="輸入電子信箱" class="sign_text"/>
+                <input placeholder="輸入密碼" class="sign_text" type="password" onkeyup="this.value=this.value.replace(/[^\w_]/g,'')">
+            </form>
+            <input type="button" value="登入帳戶" class="sign_button" id="sign_in_button">
+            <div class="reminder1"></div>
+            <div class="sign_switch1">還沒有帳戶？
+                <div class="sign_switch2" onclick = signswitch()>點此註冊</div>
+            </div>
+        </div>
+
+        <div class="sign_bar sign_bar_hide">
+            <div class="sign_bar_top"><span class="passwordeyeO signup_eye" onclick = eyeSwitch()></span><span class="passwordeyeC signup_eye" onclick = eyeSwitch()></span></div>
+            <div class="sign_bar_title">註冊會員帳號</div>
+            <form action="/api/user" method="post" id="signupform">
+                <input placeholder="輸入姓名" class="sign_text" name="name" />
+                <input placeholder="輸入電子信箱" class="sign_text" name="email" />
+                <input placeholder="輸入密碼" class="sign_text" name="password" onkeyup="this.value=this.value.replace(/[^\w_]/g,'')">
+            </form>
+            <input type="button" value="註冊帳戶" class="sign_button" id="sign_up_button">
+            <div class="reminder2"></div>
+            <div class="sign_switch1">已經有帳戶了？
+                <div class="sign_switch2"  onclick = signswitch()>點此登入</div>
+            </div>
+        </div>
+    </div>  
+   </body>
+   <script src="{{ url_for('static',filename='login.js')}}"></script>
+   <script src="{{ url_for('static',filename='booking.js')}}"></script>
+</html>

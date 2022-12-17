@@ -132,3 +132,56 @@
         }
     });
 
+//預定行程
+    let journey = document.querySelector(".button");
+    journey.addEventListener("click",() =>{
+        let login_token = document.cookie.indexOf("login_token");
+        if(login_token == -1){
+            signOpen()
+        }
+        else{
+            let url = "http://35.76.166.101:3000/api/booking";
+
+            let id = location.href.split("/")[4].split("?")[0];
+            let date = document.getElementById("date").value;
+            let price = "";
+            let timeRadios = document.getElementsByName("time");
+            for (x=0; x<2; x++){
+                if (timeRadios[x].checked){
+                    if(x == 0){
+                        price = 2000
+                    }else{
+                        price = 2500
+                    }
+                }
+            }
+            fetch(url, {
+                method:"POST",
+                body: JSON.stringify({
+                    "id" : id,
+                    "date" : date,
+                    "price" : price
+                }),
+                credentials: "include",
+                cache:"no-cache",
+                headers: new Headers({
+                    "Content-Type":"application/json; charset=UTF-8",
+                }),
+            })
+            .then(res =>{
+                res = res.json();
+                return res
+            })
+            .then(result =>{
+                console.log(result)
+                if(result["ok"] == true){
+                    alert("預定成功，稍後請至 *預定行程* 頁面付款")
+                }else if(result["message"] == "尚未登入帳號"){
+                    signOpen()
+                }else{
+                    alert(result["message"])
+                }
+            })
+        }
+        
+    })
