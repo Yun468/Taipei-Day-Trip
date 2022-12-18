@@ -5,30 +5,34 @@ function goHome(){
 
 //開視窗載入
     //檢查登入狀態
-    let loginUrl = "http://35.76.166.101:3000/api/user/auth";
-    
-    fetch(loginUrl)
-    .then(res =>{
-        res = res.json();
-        return res
-    })
-    .then(result =>{
-        let bookingUrl = "http://35.76.166.101:3000/booking";
-        if (result["data"] != null){                 //  result = 使用者資訊;           
-            let userData = "userData = " + JSON.stringify(result);     
-            document.cookie =  userData;            //將使用者資訊存放到cookie供使用
-            if((location.href) != bookingUrl){
-                let signOpen = (document.querySelectorAll(".forNav"))[1];
-                let signOut = document.querySelector(".forNav_hide");
-                signOut.classList.remove("forNav_hide")
-                signOpen.classList.add("forNav_hide")
-            }
-        }else{
-            if((location.href) == bookingUrl){
-                window.location.href = "http://35.76.166.101:3000"
-            }
+let login_token = document.cookie.indexOf("login_token");
+if(login_token == -1){
+    window.location.href = "http://35.76.166.101:3000"
+}
+let loginUrl = "http://35.76.166.101:3000/api/user/auth";
+
+fetch(loginUrl)
+.then(res =>{
+    res = res.json();
+    return res
+})
+.then(result =>{
+    let bookingUrl = "http://35.76.166.101:3000/booking";
+    if (result["data"] != null){                 //  result = 使用者資訊;           
+        let userData = "userData = " + JSON.stringify(result);     
+        document.cookie =  userData;            //將使用者資訊存放到cookie供使用
+        if((location.href) != bookingUrl){
+            let signOpen = (document.querySelectorAll(".forNav"))[1];
+            let signOut = document.querySelector(".forNav_hide");
+            signOut.classList.remove("forNav_hide")
+            signOpen.classList.add("forNav_hide")
         }
-    })
+    }else{
+        if((location.href) == bookingUrl){
+            window.location.href = "http://35.76.166.101:3000"
+        }
+    }
+})
 // 登入及註冊介面
 const sign = document.querySelector(".sign");
 // 開啟signBar
