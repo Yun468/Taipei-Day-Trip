@@ -1,46 +1,122 @@
+//點擊mark回家
+function goHome(){
+    window.location.href = "http://35.76.166.101:3000"
+}
+
 //開視窗載入
     //檢查登入狀態
-    let loginUrl = "http://35.76.166.101:3000/api/user/auth";
+    // let loginUrl = "http://35.76.166.101:3000/api/user/auth";
+    let loginUrl = "http://127.0.0.1:3000/api/user/auth";
     fetch(loginUrl)
     .then(res =>{
         res = res.json();
         return res
     })
     .then(result =>{
-        const userData = result;                                    // userData = 使用者資料
-        if (userData != null){
-            let signOpen = (document.querySelectorAll(".forNav-1"))[1];
-            let signOut = document.querySelector(".forNav_hide");
-            signOut.classList.remove("forNav_hide")
-            signOpen.classList.add("forNav_hide")
+        // let bookingUrl = "http://35.76.166.101:3000/booking";
+        let bookingUrl = "http://127.0.0.1:3000/booking";
+        if (result["data"] != null){                 //  result = 使用者資訊;           
+            let userData = "userData = " + JSON.stringify(result);     
+            document.cookie =  userData;            //將使用者資訊存放到cookie供使用
+            if((location.href) != bookingUrl){
+                let signOpen = (document.querySelectorAll(".forNav"))[1];
+                let signOut = document.querySelector(".forNav_hide");
+                signOut.classList.remove("forNav_hide")
+                signOpen.classList.add("forNav_hide")
+            };
+            
+        }else{
+            if((location.href) == bookingUrl){
+                document.location.href = "http://35.76.166.101:3000/"
+            }
         }
     })
 // 登入及註冊介面
 const sign = document.querySelector(".sign");
 // 開啟signBar
 function signOpen(){
-    sign.classList.add("sign_active")
+    sign.classList.add("sign_active");
 }
 // 關閉signBar
 function signClosed(){
     sign.classList.remove("sign_active");
+    let Sign_barHide = document.querySelector(".sign_bar_hide");
+    Sign_barHide.classList.remove("sign_bar_hide");
+    let signupBar = (document.querySelectorAll(".sign_bar"))[1];
+    signupBar.classList.add("sign_bar_hide");
     reminder2.style = "display:none";
     reminder1.style = "display:none";
     let forms = document.getElementsByTagName("input");
     for(x=0; x<forms.length; x++){
         forms[x].value  ="";
     }
-
+    let signupButtton = document.querySelector("#sign_up_button");
+    signupButtton.value = "註冊帳戶";
+    let signinButtton = document.querySelector("#sign_in_button");
+    signinButtton.value = "登入帳戶";
+    //眼睛和密碼欄位重設
+    let eyeactive = document.querySelector(".eyeactive");
+    eyeactive.classList.remove("eyeactive");
+    let passwordeyeO = document.querySelector(".passwordeyeO");
+    passwordeyeO.classList.remove("signup_eye");
+    passwordeyeO.classList.add("eyeactive");
+    let password1 = (document.querySelector("#signinform").querySelectorAll(".sign_text"))[1];
+    let password2 = (document.querySelector("#signupform").querySelectorAll(".sign_text"))[2];
+    password1.setAttribute("type","password");
+    password2.setAttribute("type","password");
 }
 //signBar切換
 function signswitch(){
-    let signCloseds = document.querySelectorAll(".sign_closed")
     let signBars = document.querySelectorAll(".sign_bar");
     for(x=0; x<2; x++){
-        signBars[x].classList.toggle("sign_bar_hide")
-        signCloseds[x].classList.toggle("sign_closed_hide")
+        signBars[x].classList.toggle("sign_bar_hide");
     };
+
+    //眼睛
+    let eyeactives = document.querySelectorAll(".eyeactive");
+    for(x=0; x<(eyeactives.length); x++){
+        eyeactives[x].classList.remove("eyeactive");
+    }
+    let passwordeyeOs = document.querySelectorAll(".passwordeyeO");
+    for(x=0; x<2; x++){
+        passwordeyeOs[x].classList.add("eyeactive");
+    }
+    let password1 = (document.querySelector("#signinform").querySelectorAll(".sign_text"))[1];
+    let password2 = (document.querySelector("#signupform").querySelectorAll(".sign_text"))[2];
+    password1.setAttribute("type","password");
+    password2.setAttribute("type","password");
 };
+//密碼的眼睛切換
+function eyeSwitch(){
+    let passwordeyeOs = document.querySelectorAll(".passwordeyeO");
+    let passwordeyeCs = document.querySelectorAll(".passwordeyeC");
+    for(x=0; x<2; x++){
+        passwordeyeOs[x].classList.toggle("eyeactive");
+        passwordeyeCs[x].classList.toggle("eyeactive");
+    };
+    let signBars = document.querySelectorAll(".sign_bar");
+    let notLocation = 0;
+    for(x=0; x<2; x++){
+        let signBar = signBars[x]
+        for(n=0; n<(signBar.classList).length; n++){
+            if((signBar.classList)[n] == "sign_bar_hide"){
+                notLocation = x
+            }
+        };
+    };
+    console.log( notLocation )
+    let password =null;
+    if(notLocation == 1){
+        password = (document.querySelector("#signinform").querySelectorAll(".sign_text"))[1]
+    }else{
+        password = (document.querySelector("#signupform").querySelectorAll(".sign_text"))[2]
+    };
+    if(password.type == "password"){
+        password.setAttribute("type","text")
+    }else{
+        password.setAttribute("type","password")
+    }
+}
 
 // 註冊帳號
 let signupButtton = document.querySelector("#sign_up_button");
@@ -123,7 +199,8 @@ signinButtton.addEventListener("click",()=>{
         return null;
     }
     //登入帳號
-    let url = "http://35.76.166.101:3000/api/user/auth";
+    // let url = "http://35.76.166.101:3000/api/user/auth";
+    let url = "http://127.0.0.1:3000/api/user/auth"
     fetch(url, {
         method:"PUT",
         body: JSON.stringify({
@@ -152,7 +229,9 @@ signinButtton.addEventListener("click",()=>{
 //登出帳號
 let signOut = (document.querySelectorAll(".forNav-1"))[2];
 signOut.addEventListener("click",()=>{
-    let url = "http://35.76.166.101:3000/api/user/auth";
+    // let url = "http://35.76.166.101:3000/api/user/auth";
+    let url = "http://127.0.0.1:3000/api/user/auth";
+
     fetch(url, {
         method:"DELETE"
     })
@@ -162,7 +241,21 @@ signOut.addEventListener("click",()=>{
     })
     .then(result=>{
         if(result["ok"] == true){
-            location.reload();
+            userData = null;
+            let bookingUrl = "http://35.76.166.101:3000/booking"
+            if((location.href) == bookingUrl){
+                document.location.href = "http://35.76.166.101:3000/"
+            }else{
+                location.reload();
+            }
         }
     })
 })
+
+//切換至「預定行程」
+let reserveJourney = document.querySelectorAll(".forNav-1")[0]
+reserveJourney.addEventListener("click",()=>{
+    // document.location.href = "http://35.76.166.101:3000/booking"
+    document.location.href = "http://127.0.0.1:3000/booking"
+})
+

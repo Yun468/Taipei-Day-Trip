@@ -1,0 +1,389 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+html{
+    height: 100%;
+}
+/* --------------------------------------index*/
+.index{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    background: #FFFFFF;
+    z-index: 10;
+    height: 100%;    
+}
+/* --------------------------------------Navigation*/
+.Navi{
+    width: 100%;
+    height: 54px;
+    flex-shrink: 0;
+}
+.Navigation{
+    display:flex;
+    justify-content: center;
+    width: 100%;
+    height: 54px;
+    background: #FFFFFF;
+    position:fixed;
+    z-index:1;
+}
+.navigation{
+    position: fixed;
+    width: 1200px;
+    height: 34px;
+    margin: 10px;
+}
+.tdt{
+    position: absolute;
+    width: 150px;
+    height: 34px;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 34px;
+    color: #448899;
+    cursor: pointer;
+}
+.Frame2{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+    position: absolute;
+    width: 175px;
+    height: 34px;
+    right: 0px;
+}
+.Fram1{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+    width: 175px;
+    height: 34px;
+    flex: none;
+    flex-grow: 0;
+}
+.forNav{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin : 10px;
+    gap: 10px;
+    flex: none;
+    flex-grow: 0;
+    
+}
+.forNav_hide{
+    display: none;
+}
+.forNav-1{
+    flex: none;
+    flex-grow: 0;
+    height: 14px;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 14px;
+    color: #666666;
+    cursor: pointer;
+}
+.forNav-1:hover{
+    filter: brightness(0.3);
+}
+/* ---------------------------------- navi_hr */
+.navi_hr{
+    width: calc(100% - 2px);
+    margin: 0;
+    border: 1px solid #E8E8E8;
+}
+/* ---------------------------------- headline */
+.headline{
+    width: 1000px;
+    height: 27px;
+    margin: 40px 0 30px 0;
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 16px;
+    color: #666666;
+
+}
+.user{
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 16px;
+    color: #666666;
+}
+/* ---------------------------------- none_booking*/
+.none_booking{
+    display: none;
+    width: 1000px;
+    margin: 5px 0 40px 0 ;
+    font-family: 'Noto Sans TC';
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 13px;
+    color: #666666;
+}
+/* ---------------------------------- booking,route */
+.booking{
+    display: none;
+    align-items: center;
+    width: 1200px;
+}
+.route{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 0 30px 0;
+}
+
+/* ---------------------------------- section*/
+.section{
+    width: 980px;
+    margin: 0 10px;
+    display: flex;
+}
+.section_picture{
+    width: 250px;
+    height: 200px;
+    margin-right: 22px;
+    padding: 0 8px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.info{
+    width: 662px;
+}
+.info_title{
+    margin: 5px 0 30px 0;
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 13px;
+    color: #448899;
+}
+.info_frame{
+    height: 14px;
+    margin-bottom: 20px;
+    font-family: 'Noto Sans TC';
+    font-weight: 500;
+    line-height: 13px;
+    color: #666666;
+}
+.delete{
+    background-image: url("icon_delete.png");
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+/* ---------------------------------- contect_form */
+form{
+    width: 100%;
+    display: flex;
+    flex-direction:column ;
+    align-items: center;
+}
+.form_index,.confirm{
+    width: 980px;
+}
+.form_hr{
+    margin: 0;
+    border: 1px solid #E8E8E8;
+}
+.form_title{
+    height: 24px;
+    margin: 44px 0 24px 0;
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 16px;
+    color: #666666;
+}
+.form_filed{
+    height: 38px;
+    margin-bottom: 15px;
+    font-family: 'Noto Sans TC';
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 13px;
+    color: #666666;
+}
+.connect_notice{
+    margin: 5px 0 45px 0;
+    font-family: 'Noto Sans TC';
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 23px;
+    color: #666666;
+}
+.form_filed_input{
+    height: 18px;
+    padding: 9px 10px;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+}
+/* ---------------------------------- confirm */
+.confirm{
+    margin: 25px 0 0 0;
+}
+.sum{
+    margin: 43px 0 25px 0;
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 13px;
+    color: #666666;
+}
+.confirm_index{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.booking_button{
+    display: flex;
+    flex-direction: row-reverse;
+    width: 173px;
+    height: 36px;
+    margin: 0 10px 62px 0;
+    padding: 10px 20px;
+    background: #448899;
+    border-radius: 5px;
+    border: 0;
+    font-family: 'Noto Sans TC';
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 19px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+.booking_button:hover{
+    opacity: 0.9;
+}
+/* ---------------------------------- footer */
+.footer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 104px;
+    flex-shrink: 0;
+    background: #757575;
+}
+.foot{
+    margin-top: 45px;
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 13px;
+    color: #FFFFFF;
+}
+/* ----------------------------------------signIn */
+.sign{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+/* ----------------------------------小尺寸畫面 */
+@media(max-width:1250px){
+    .navigation{
+        width: 100%;
+    }
+    .tdt{
+        left:10px;
+    }
+    .headline{
+        width: calc(100% - 100px);
+        margin: 40px 25px 30px 25px ;
+    }
+    .none_booking{
+        width: calc(100% - 100px);
+        margin: 5px 25px 40px 25px ;
+    }
+    .booking{
+        width: 100%;
+    }
+    .route{
+        width: calc(100% - 50px);
+        margin: 0px 25px 30px 25px ;
+    }
+    .section{
+        width: calc(100% - 120px);
+    }
+    .section_picture{
+        width: 25%;
+    }
+    .info{
+        width: 67%;
+    }
+    .form_index,.confirm{
+        width: calc(100% - 170px);
+    }
+
+}
+@media(max-width:1080px){
+    .headline{
+        width: calc(100% - 20px);
+        margin: 42px 10px 0px 10px;
+    }
+    .none_booking{
+        width: calc(100% - 20px);
+        margin: 35px 10px 40px 10px;
+    }
+    .route{
+        width: calc(100% - 20px);
+        margin: 0px 10px 30px 10px;
+    }
+    .section{
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+        width: 100%;
+        margin: 0 ;
+    }
+    .section_picture{
+        width: 100%;
+        margin: 28px 0;
+    }
+    .info{
+        width: 100%;
+    }
+    .delete{
+        position: relative;
+        left: calc(100% - 30px);
+    }
+    .form_index,.confirm{
+        width: calc(100% - 10px);
+        margin: 0 10px;
+    }
+
+}
