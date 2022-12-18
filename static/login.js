@@ -6,8 +6,11 @@ function goHome(){
 //開視窗載入
     //檢查登入狀態
 let login_token = document.cookie.indexOf("login_token");
+let bookingUrl = "http://35.76.166.101:3000/booking";
 if(login_token == -1){
-    window.location.href = "http://35.76.166.101:3000"
+    if((location.href) == bookingUrl){
+        window.location.href = "http://35.76.166.101:3000"
+    }
 }
 let loginUrl = "http://35.76.166.101:3000/api/user/auth";
 
