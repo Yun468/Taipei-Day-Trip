@@ -1,6 +1,5 @@
 //開視窗取得使用者訂購行程
 let url = "http://35.76.166.101:3000/api/booking";
-
 fetch(url).then(res =>{
     res = res.json();
     return res

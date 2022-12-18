@@ -13,7 +13,7 @@ function goHome(){
         return res
     })
     .then(result =>{
-        let bookingUrl = "http://35.76.166.101:3000/api/user/auth"
+        let bookingUrl = "http://35.76.166.101:3000/booking"
         if (result["data"] != null){                 //  result = 使用者資訊;           
             let userData = "userData = " + JSON.stringify(result);     
             document.cookie =  userData;            //將使用者資訊存放到cookie供使用
@@ -25,8 +25,6 @@ function goHome(){
             }else{
                 window.location.href = "http://35.76.166.101:3000"
             }
-        }else{
-            alert(result["message"])
         }
     })
 // 登入及註冊介面
