@@ -22,12 +22,11 @@ function goHome(){
                 let signOut = document.querySelector(".forNav_hide");
                 signOut.classList.remove("forNav_hide")
                 signOpen.classList.add("forNav_hide")
-            };
-            
-        }else{
-            if((location.href) == bookingUrl){
-                document.location.href = "http://35.76.166.101:3000/"
+            }else{
+                window.location.href = "http://35.76.166.101:3000"
             }
+        }else{
+            alert(result["message"])
         }
     })
 // 登入及註冊介面
@@ -252,6 +251,11 @@ signOut.addEventListener("click",()=>{
 //切換至「預定行程」
 let reserveJourney = document.querySelectorAll(".forNav-1")[0]
 reserveJourney.addEventListener("click",()=>{
-    document.location.href = "http://35.76.166.101:3000/booking"
+    let login_token = document.cookie.indexOf("login_token");
+    if(login_token == -1){
+        signOpen()
+    }else{
+        document.location.href = "http://35.76.166.101:3000/booking"
+    }
 })
 

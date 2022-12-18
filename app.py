@@ -119,12 +119,23 @@ class Booking(Resource):
 							"error": True,
 							"message": "請選擇出發日期"
 						}
-					else:												#定義好userid,attractionId,date,time,price，寫入資料表booking
-						sql = "INSERT INTO booking (userid,attractionId,date,time,price) VALUES (%s,%s,%s,%s,%s) "
-						val = (userid,attractionId,date,time,price)
+					else:
+						sql = "SELECT attractionId,date,time,price FROM booking where userid = %s "		
+						val = (userid,)
 						mycursor.execute(sql,val)
-						mydb.commit()
-						json_data = {"ok" : True}
+						result = mycursor.fetchone()
+						if result == None:
+							sql = "INSERT INTO booking (userid,attractionId,date,time,price) VALUES (%s,%s,%s,%s,%s) "
+							val = (userid,attractionId,date,time,price)
+							mycursor.execute(sql,val)
+							mydb.commit()
+							json_data = {"ok" : True}
+						else:
+							sql = "UPDATE booking SET attractionId =%s,date =%s,time =%s,price =%s "
+							val = (attractionId,date,time,price)
+							mycursor.execute(sql,val)
+							mydb.commit()
+							json_data = {"ok" : True}
 				else:
 					json_data = {
 						"error": True,

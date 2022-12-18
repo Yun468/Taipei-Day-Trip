@@ -24,6 +24,7 @@ fetch(url).then(res =>{
         form_connect.style.display = "flex";
         
         //預定景點資訊
+        let title = document.getElementById("title");
         let picture = document.querySelector(".section_picture");
         let date = document.getElementById("date");
         let time = document.getElementById("time");
@@ -37,6 +38,7 @@ fetch(url).then(res =>{
             realTime  = "下午14點至下午17點"
         }
 
+        title.innerHTML = result["data"]["attraction"]["name"]
         picture.setAttribute("style", "background-image:url(" + result["data"]["attraction"]["image"] + ")");
         date.innerHTML = result["data"]["date"];
         time.innerHTML =  realTime ;

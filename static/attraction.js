@@ -52,6 +52,7 @@
                 currentPR(e.target)
             })
         }
+        currentPictureRadio()               //調動radio checked
     });
 
 
@@ -109,7 +110,7 @@
     let morning = document.querySelector(".morning");
     let afternoon = document.querySelector(".afternoon");
     let pictureRadios = document.getElementsByName("picture");
-    window.onload = ()=>{
+    function currentPictureRadio(){
         //pictureRadio
         pictureRadios[0].checked = true ;
         pictureRadios[0].value = 0;
