@@ -13,7 +13,7 @@ function goHome(){
         return res
     })
     .then(result =>{
-        let bookingUrl = "http://35.76.166.101:3000/booking"
+        let bookingUrl = "http://35.76.166.101:3000/booking";
         if (result["data"] != null){                 //  result = 使用者資訊;           
             let userData = "userData = " + JSON.stringify(result);     
             document.cookie =  userData;            //將使用者資訊存放到cookie供使用
@@ -22,9 +22,9 @@ function goHome(){
                 let signOut = document.querySelector(".forNav_hide");
                 signOut.classList.remove("forNav_hide")
                 signOpen.classList.add("forNav_hide")
-            }else{
-                window.location.href = "http://35.76.166.101:3000"
             }
+        }else{
+            window.location.href = "http://35.76.166.101:3000"
         }
     })
 // 登入及註冊介面
