@@ -24,7 +24,9 @@ function goHome(){
                 signOpen.classList.add("forNav_hide")
             }
         }else{
-            window.location.href = "http://35.76.166.101:3000"
+            if((location.href) == bookingUrl){
+                window.location.href = "http://35.76.166.101:3000"
+            }
         }
     })
 // 登入及註冊介面
