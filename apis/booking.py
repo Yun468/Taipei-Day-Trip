@@ -15,7 +15,7 @@ mydbpool = apis.mysqlconnect.mydbpool
 
 
 class  Travel(Resource):
-	def reserve(self):
+    def reserve(self):
         json_data = []
         try:
             mydb = mydbpool.get_connection()
@@ -79,8 +79,8 @@ class  Travel(Resource):
             mycursor.close()
             response = jsonify(json_data)
             return response
-	
-	def establish(self):
+    
+    def establish(self):
         json_data = []
         try:
             mydb = mydbpool.get_connection()
@@ -130,18 +130,18 @@ class  Travel(Resource):
                         "message": "尚未登入帳號"
                     }
 
-		except:
-			json_data = {
-				"error": True,
-				"message": "資料庫連線錯誤，請聯絡客服人員"
-			}
-		finally:
-			mydb.close()
-			mycursor.close()
-			response = jsonify(json_data)
-			return response
+        except:
+            json_data = {
+                "error": True,
+                "message": "資料庫連線錯誤，請聯絡客服人員"
+            }
+        finally:
+            mydb.close()
+            mycursor.close()
+            response = jsonify(json_data)
+            return response
 
-	def delete_est(self):
+    def delete_est(self):
         json_data = []
         try:
             mydb = mydbpool.get_connection()
@@ -185,7 +185,7 @@ class  Travel(Resource):
             mycursor.close()
             response = jsonify(json_data)
             return response
-			
+            
 
 @api3.route("/api/booking", methods=["GET","POST","DELETE"])
 def api_booking():
