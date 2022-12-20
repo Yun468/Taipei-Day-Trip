@@ -141,8 +141,7 @@
             signOpen()
         }
         else{
-            // let url = "http://35.76.166.101:3000/api/booking";
-            let url = "http://127.0.0.1:3000/api/booking";
+            let url = "http://35.76.166.101:3000/api/booking";
 
             let id = location.href.split("/")[4].split("?")[0];
             let date = document.getElementById("date").value;
