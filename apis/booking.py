@@ -189,10 +189,10 @@ class  Travel(Resource):
 
 @api3.route("/api/booking", methods=["GET","POST","DELETE"])
 def api_booking():
-	if request.method == "GET":
-		response =  Travel.reserve(request)
-	elif request.method == "POST":
-		response =  Travel.establish(request)
-	else:
-		response =  Travel.delete_est(request)
-	return response
+    if request.method == "GET":
+        response = Travel.reserve(request)
+    elif request.method == "POST":
+        response = Travel.establish(request)
+    else:
+        response = Travel.delete_est(request)
+    return response
