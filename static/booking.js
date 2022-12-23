@@ -1,11 +1,16 @@
 //開視窗取得使用者訂購行程
-let url = "http://35.76.166.101:3000/api/booking";
+// let url = "http://35.76.166.101:3000/api/booking";
+let url = "http://127.0.0.1:3000/api/booking";
+
+let tripData = [];                  //預留未來付款資訊
+
 fetch(url).then(res =>{
     res = res.json();
     return res
 })
 .then(result =>{                        //result = 行程
     //寫入使用者姓名
+    tripData.push(result["data"]);
     let user = document.querySelector(".user");
     let userData = JSON.parse((document.cookie.split("userData=")[1]).split(";")[0]);       //從cookie 抓使用者資料並轉物件
     user.innerHTML = userData["data"]["name"] ;
@@ -62,11 +67,10 @@ fetch(url).then(res =>{
     }
 });
 
-
 //刪除訂購行程
 let deleteButton = document.querySelector(".delete");
 deleteButton.addEventListener("click",()=>{
-let url = "http://35.76.166.101:3000/api/booking";
+    let url = "http://35.76.166.101:3000/api/booking";
 
     let attractionId = deleteButton.dataset.attractionid
 
@@ -105,4 +109,3 @@ let url = "http://35.76.166.101:3000/api/booking";
 
         })
     })
-

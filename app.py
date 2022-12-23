@@ -10,6 +10,7 @@ from apis.booking import api3,Travel
 from flask_restful import Api, Resource
 import jwt
 import time
+import requests
 
 
 app = Flask(__name__,
@@ -30,6 +31,55 @@ Api.add_resource(Travel, "/api/booking/Travel")
 ######################################################
 
 
+
+
+
+@app.route("/api/orders", methods=["POST"])
+def orders():
+    json_data = []
+    mydb = mydbpool.get_connection()
+    mycursor = mydb.cursor()
+    try:
+        login_token = request.cookies.get("login_token")
+        login_token = jwt.decode(login_token, 'secret', algorithms=['HS256'])
+        userid = login_token["id"]                                  #使用者ID
+        req = request.get_json()
+        prime = req["prime"]
+        order = req["order"]
+        paid = "Not Completed"
+        sql = "INSERT INTO orders (userId,price,paid,attractionId,date,time,contactName,contactEmail,contactPhone) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s) "
+        val = (userid,order["price"],paid,order["trip"]["attraction"]["id"],order["trip"]["date"],order["trip"]["time"],order["contact"]["name"],order["contact"]["email"],order["contact"]["phone"])
+        mycursor.execute(sql,val)
+        mydb.commit()
+        phone_number = order["contact"]["phone"].lstrip()
+        #傳送prime 到tappay
+        headers = {"Content-Type":"application/json","x-api-key":"partner_KIcjSTwx3Zs9P70ckr7H1SPhYm5KNCKvR49QPYvX2vNjzL6pIw4Qsewz"}
+        data = {
+            "prime":prime,
+            "partner_key":"partner_KIcjSTwx3Zs9P70ckr7H1SPhYm5KNCKvR49QPYvX2vNjzL6pIw4Qsewz",
+            "merchant_id":"Chiayun_ESUN",
+            "details":"TDT Test",
+            "amount":order["price"],
+            "currency":"TWD",
+            "cardholder": {
+                "phone_number":"+886923456789",                #測試號碼
+                "name":order["contact"]["name"],
+                "email":order["contact"]["email"],
+            },
+        }
+        res = requests.post('https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime', data = data, headers = headers)
+        print(res.text)
+        json_data = res.text
+    except:
+        json_data = {
+            "error": True,
+            "message": "資料庫連線錯誤，請聯絡客服人員"
+        }
+    finally:
+        mydb.close()
+        mycursor.close()
+        response = jsonify(json_data)
+        return response
 ################################################
 
 # Pages
