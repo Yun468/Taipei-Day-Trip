@@ -247,13 +247,14 @@ signOut.addEventListener("click",()=>{
     })
     .then(result=>{
         if(result["ok"] == true){
-            userData = null;
-            let bookingpage = "http://35.76.166.101:3000/booking";
-            let thankyoupage = "http://35.76.166.101:3000/thankyou";
-            if((location.href) == bookingpage || (location.href) == thankyoupage){
-                document.location.href = "http://35.76.166.101:3000/"
-            }else{
+            // userData = null;
+            let goHome1 = location.href.indexOf("booking");
+            let goHome2 = location.href.indexOf("thankyou");
+
+            if(goHome1 == -1 && goHome2 == -1){
                 location.reload();
+            }else{
+                document.location.href = "http://35.76.166.101:3000/"
             }
         }
     })
