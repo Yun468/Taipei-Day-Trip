@@ -21,17 +21,18 @@ fetch(loginUrl)
 })
 .then(result =>{
     let bookingUrl = "http://35.76.166.101:3000/booking";
+    let thankyoupage = "http://35.76.166.101:3000/thankyou";
     if (result["data"] != null){                 //  result = 使用者資訊;           
         let userData = "userData = " + JSON.stringify(result);     
         document.cookie =  userData;            //將使用者資訊存放到cookie供使用
-        if((location.href) != bookingUrl){
+        if((location.href) != bookingUrl && (location.href) !=thankyoupage){
             let signOpen = (document.querySelectorAll(".forNav"))[1];
             let signOut = document.querySelector(".forNav_hide");
             signOut.classList.remove("forNav_hide")
             signOpen.classList.add("forNav_hide")
         }
     }else{
-        if((location.href) == bookingUrl){
+        if((location.href) == bookingUrl || (location.href) == thankyoupage){
             window.location.href = "http://35.76.166.101:3000"
         }
     }
@@ -248,7 +249,7 @@ signOut.addEventListener("click",()=>{
         if(result["ok"] == true){
             userData = null;
             let bookingpage = "http://35.76.166.101:3000/booking";
-            let thankyoupage = "http://35.76.166.101:3000/thankyou"
+            let thankyoupage = "http://35.76.166.101:3000/thankyou";
             if((location.href) == bookingpage || (location.href) == thankyoupage){
                 document.location.href = "http://35.76.166.101:3000/"
             }else{
