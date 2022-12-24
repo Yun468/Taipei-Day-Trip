@@ -247,7 +247,7 @@ signOut.addEventListener("click",()=>{
     })
     .then(result=>{
         if(result["ok"] == true){
-            // userData = null;
+            setCookie(userData, "", -1);
             let goHome1 = location.href.indexOf("booking");
             let goHome2 = location.href.indexOf("thankyou");
 
