@@ -229,12 +229,10 @@
                     // 紀錄訂單編號，附在querystring 上並導向thankyou.html
                     if(result["data"] != null){
                         let serial_number = result["data"]["number"];
-                        // window.location.href = "http://35.76.166.101:3000/thankyou?number="+serial_number
-                        window.location.href ="http://127.0.0.1:3000/thankyou?number="+serial_number
+                        window.location.href = "http://35.76.166.101:3000/thankyou?number="+serial_number
                     }else{
                         let serial_number = result["number"];
-                        // window.location.href = "http://35.76.166.101:3000/thankyou?number="+serial_number+"&paid=-1"
-                        window.location.href ="http://127.0.0.1:3000/thankyou?number="+serial_number+"&paid=-1"
+                        window.location.href = "http://35.76.166.101:3000/thankyou?number="+serial_number+"&paid=-1"
                     }
                 })
             })
