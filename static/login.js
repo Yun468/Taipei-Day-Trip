@@ -247,11 +247,11 @@ signOut.addEventListener("click",()=>{
     })
     .then(result=>{
         if(result["ok"] == true){
-            setCookie(userData, "", -1);
+            document.cookie = "userData=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             let goHome1 = location.href.indexOf("booking");
             let goHome2 = location.href.indexOf("thankyou");
 
-            if(goHome1 == -1 && goHome2 == -1){
+            if(goHome1 == -1 & goHome2 == -1){
                 location.reload();
             }else{
                 document.location.href = "http://35.76.166.101:3000/"
