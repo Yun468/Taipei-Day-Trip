@@ -48,22 +48,58 @@ def orders():
         order = req["order"]
         paid = "Not Completed"
         serial_number = int(str(int(time.time())) +str(userid) + str(order["trip"]["attraction"]["id"]))
-        try:
-            sql = "INSERT INTO orders (userId,serial_number,price,paid,attractionId,date,time,contactName,contactEmail,contactPhone) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
-            val = (userid,serial_number,order["price"],paid,order["trip"]["attraction"]["id"],order["trip"]["date"],order["trip"]["time"],order["contact"]["name"],order["contact"]["email"],order["contact"]["phone"])
+        sql = "INSERT INTO orders (userId,serial_number,price,paid,attractionId,date,time,contactName,contactEmail,contactPhone) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
+        val = (userid,serial_number,order["price"],paid,order["trip"]["attraction"]["id"],order["trip"]["date"],order["trip"]["time"],order["contact"]["name"],order["contact"]["email"],order["contact"]["phone"])
+        mycursor.execute(sql,val)
+        mydb.commit()
+
+        #傳送prime 到tappay
+        phone_number = "+886"+(order["contact"]["phone"].lstrip())
+        headers = {"Content-Type":"application/json","x-api-key":"partner_KIcjSTwx3Zs9P70ckr7H1SPhYm5KNCKvR49QPYvX2vNjzL6pIw4Qsewz"}
+        data = {
+            "prime":prime,
+            "partner_key":"partner_KIcjSTwx3Zs9P70ckr7H1SPhYm5KNCKvR49QPYvX2vNjzL6pIw4Qsewz",
+            "merchant_id":"Chiayun_ESUN",
+            "details":"TDT Test",
+            "amount":int(order["price"]),
+            "cardholder": {
+                "phone_number":phone_number,
+                "name":order["contact"]["name"],
+                "email":order["contact"]["email"],
+            },
+            "remember": True
+        }
+        res = requests.post('https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime', json = data, headers = headers)
+        res = res.json()
+
+        #付款是否成功
+        if res["status"] == 0:
+            sql = "UPDATE orders SET paid = %s WHERE serial_number = %s"
+            val = ("Completed",serial_number)
             mycursor.execute(sql,val)
             mydb.commit()
-        except: 
+            # 訂單編號
             json_data = {
+                "data": {
+                    "number": serial_number,
+                    "payment": {
+                        "status": 0,
+                        "message": "付款成功"
+                    }
+                }
+            }
+        else:
+            msg = res["msg"]
+            json_data = {
+                "number" :serial_number,
                 "error": True,
-                "message": "錯了"
+                "msg":msg
             }
     except:
         json_data = {
             "error": True,
-            "message": "123456789"
+            "message": "資料庫連線錯誤，請聯絡客服人員"
         }
-
     finally:
         mydb.close()
         mycursor.close()
