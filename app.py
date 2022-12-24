@@ -47,29 +47,56 @@ def orders():
         prime = req["prime"]
         order = req["order"]
         paid = "Not Completed"
-        sql = "INSERT INTO orders (userId,price,paid,attractionId,date,time,contactName,contactEmail,contactPhone) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s) "
-        val = (userid,order["price"],paid,order["trip"]["attraction"]["id"],order["trip"]["date"],order["trip"]["time"],order["contact"]["name"],order["contact"]["email"],order["contact"]["phone"])
+        serial_number = int(str(int(time.time())) +str(userid) + str(order["trip"]["attraction"]["id"]))
+        sql = "INSERT INTO orders (userId,serial_number,price,paid,attractionId,date,time,contactName,contactEmail,contactPhone) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
+        val = (userid,serial_number,order["price"],paid,order["trip"]["attraction"]["id"],order["trip"]["date"],order["trip"]["time"],order["contact"]["name"],order["contact"]["email"],order["contact"]["phone"])
         mycursor.execute(sql,val)
         mydb.commit()
-        phone_number = order["contact"]["phone"].lstrip()
+
+
         #傳送prime 到tappay
+        phone_number = "+886"+(order["contact"]["phone"].lstrip())
         headers = {"Content-Type":"application/json","x-api-key":"partner_KIcjSTwx3Zs9P70ckr7H1SPhYm5KNCKvR49QPYvX2vNjzL6pIw4Qsewz"}
         data = {
             "prime":prime,
             "partner_key":"partner_KIcjSTwx3Zs9P70ckr7H1SPhYm5KNCKvR49QPYvX2vNjzL6pIw4Qsewz",
             "merchant_id":"Chiayun_ESUN",
             "details":"TDT Test",
-            "amount":order["price"],
-            "currency":"TWD",
+            "amount":int(order["price"]),
             "cardholder": {
-                "phone_number":"+886923456789",                #測試號碼
+                "phone_number":phone_number,
                 "name":order["contact"]["name"],
                 "email":order["contact"]["email"],
             },
+            "remember": True
         }
-        res = requests.post('https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime', data = data, headers = headers)
-        print(res.text)
-        json_data = res.text
+        res = requests.post('https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime', json = data, headers = headers)
+        res = res.json()
+
+        #付款是否成功
+        if res["status"] == 0:
+            sql = "UPDATE orders SET paid = %s WHERE serial_number = %s"
+            val = ("Completed",serial_number)
+            mycursor.execute(sql,val)
+            mydb.commit()
+            # 訂單編號
+            json_data = {
+                "data": {
+                    "number": serial_number,
+                    "payment": {
+                        "status": 0,
+                        "message": "付款成功"
+                    }
+                }
+            }
+        else:
+            msg = res["msg"]
+            json_data = {
+                "number" :serial_number,
+                "error": True,
+                "msg":msg
+            }
+
     except:
         json_data = {
             "error": True,
@@ -80,6 +107,7 @@ def orders():
         mycursor.close()
         response = jsonify(json_data)
         return response
+
 ################################################
 
 # Pages

@@ -1,0 +1,213 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+html{
+    height: 100%;
+}
+/* --------------------------------------index*/
+.index{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    background: #FFFFFF;
+    z-index: 10;
+    height: 100%;    
+}
+/* --------------------------------------Navigation*/
+.Navi{
+    width: 100%;
+    height: 54px;
+    flex-shrink: 0;
+}
+.Navigation{
+    display:flex;
+    justify-content: center;
+    width: 100%;
+    height: 54px;
+    background: #FFFFFF;
+    position:fixed;
+    z-index:1;
+}
+.navigation{
+    position: fixed;
+    width: 1200px;
+    height: 34px;
+    margin: 10px;
+}
+.tdt{
+    position: absolute;
+    width: 150px;
+    height: 34px;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 34px;
+    color: #448899;
+    cursor: pointer;
+}
+.Frame2{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+    position: absolute;
+    width: 175px;
+    height: 34px;
+    right: 0px;
+}
+.Fram1{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+    width: 175px;
+    height: 34px;
+    flex: none;
+    flex-grow: 0;
+}
+.forNav{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin : 10px;
+    gap: 10px;
+    flex: none;
+    flex-grow: 0;
+    
+}
+.forNav_hide{
+    display: none;
+}
+.forNav-1{
+    flex: none;
+    flex-grow: 0;
+    height: 14px;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 14px;
+    color: #666666;
+    cursor: pointer;
+}
+.forNav-1:hover{
+    filter: brightness(0.3);
+}
+/* ---------------------------------- navi_hr */
+.navi_hr{
+    width: calc(100% - 2px);
+    margin: 0;
+    border: 1px solid #E8E8E8;
+}
+/* ---------------------------------- index */
+.thankyou_index{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.result_headline{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1000px;
+    height: 27px;
+    margin: 20px 0 0px 0 ;
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 16px;
+    color: #666666;
+}
+.result{
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 16px;
+    color: red;
+}
+.number{
+    margin: 50px 10px 50px 10px ;
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 16px;
+    color: #666666;
+}
+.remind{
+    margin: 0 10px 60px 10px;
+    font-family: 'Noto Sans TC';
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 20px;
+    color: #666666;
+}
+/* ---------------------------------- footer */
+.footer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 104px;
+    flex-shrink: 0;
+    background: #757575;
+    flex: 1;
+}
+.foot{
+    margin-top: 45px;
+    font-family: 'Noto Sans TC';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 13px;
+    color: #FFFFFF;
+}
+/* ----------------------------------------signIn */
+.sign{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+/* ----------------------------------小尺寸畫面 */
+@media(max-width:1250px){
+    .navigation{
+        width: 100%;
+    }
+    .tdt{
+        left:10px;
+    }
+    .result_headline{
+        width: calc(100% - 100px);
+        margin: 20px 25px 0px 25px ;
+    }
+
+}
+@media(max-width:1080px){
+    .result_headline{
+        width: calc(100% - 20px);
+        margin: 20px 10px 0px 10px ;
+    }
+}

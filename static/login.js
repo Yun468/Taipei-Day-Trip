@@ -205,6 +205,8 @@ signinButtton.addEventListener("click",()=>{
     }
     //登入帳號
     let url = "http://35.76.166.101:3000/api/user/auth";
+
+
     fetch(url, {
         method:"PUT",
         body: JSON.stringify({
@@ -245,8 +247,9 @@ signOut.addEventListener("click",()=>{
     .then(result=>{
         if(result["ok"] == true){
             userData = null;
-            let bookingUrl = "http://35.76.166.101:3000/booking"
-            if((location.href) == bookingUrl){
+            let bookingpage = "http://35.76.166.101:3000/booking";
+            let thankyoupage = "http://35.76.166.101:3000/thankyou"
+            if((location.href) == bookingpage || (location.href) == thankyoupage){
                 document.location.href = "http://35.76.166.101:3000/"
             }else{
                 location.reload();

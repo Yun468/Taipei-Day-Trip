@@ -1,6 +1,5 @@
 //開視窗取得使用者訂購行程
-// let url = "http://35.76.166.101:3000/api/booking";
-let url = "http://127.0.0.1:3000/api/booking";
+let url = "http://35.76.166.101:3000/api/booking";
 
 let tripData = [];                  //預留未來付款資訊
 

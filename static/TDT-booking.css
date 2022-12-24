@@ -176,6 +176,7 @@ html{
     padding: 0 8px;
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
 }
 .info{
     width: 662px;

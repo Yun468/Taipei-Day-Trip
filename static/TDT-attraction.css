@@ -296,7 +296,7 @@ input[name="time"]:checked + div > .check_content > .check_item{
     display: none;
 }
 .button{    
-    height: 36px;
+    width: 114px;
     margin: 0 20px;
     padding: 10px 20px;
     background: #448899;
@@ -305,7 +305,7 @@ input[name="time"]:checked + div > .check_content > .check_item{
     border-radius: 5px;
     font-weight: 400;
     font-size: 19px;
-    line-height: 16px;
+    line-height: 19px;
     cursor: pointer;
 }
 .button:hover{

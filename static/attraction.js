@@ -136,13 +136,14 @@
 //預定行程
     let journey = document.querySelector(".button");
     journey.addEventListener("click",() =>{
-        let login_token = document.cookie.indexOf("login_token");
+        let login_token = (document.cookie).indexOf("login_token");
+        console.log(login_token )
         if(login_token == -1){
             signOpen()
+            return
         }
         else{
-            // let url = "http://35.76.166.101:3000/api/booking";
-            let url = "http://127.0.0.1:3000/api/booking";
+            let url = "http://35.76.166.101:3000/api/booking";
 
             let id = location.href.split("/")[4].split("?")[0];
             let date = document.getElementById("date").value;
