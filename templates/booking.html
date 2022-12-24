@@ -182,11 +182,6 @@
 
             // Get prime
             TPDirect.card.getPrime((result) => {
-                if (result.status !== 0) {
-                    alert('get prime error :' + result.msg)
-                    return
-                }
-                alert('get prime 成功，prime: ' + result.card.prime)
                 //將prime 跟其他資訊送到後端
                 let prime = result.card.prime;
                 let price = document.querySelector("#sum").innerHTML;
