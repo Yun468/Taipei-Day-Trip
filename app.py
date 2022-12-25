@@ -84,11 +84,6 @@ def orders():
                     }
                 }
             }
-            #刪除已成功booking 的訂單
-            sql = "DELETE FROM booking WHERE userid = %s "          #因為設計是一個userID 在booking 裡面只會有一份預定行程，故未來若想改成多個預定行程，需改動booking資料表欄位及此處的刪除方式(因未來可能改動，特此紀錄)
-            val = (userid,)
-            mycursor.execute(sql,val)
-            mydb.commit()
         else:
             msg = res["msg"]
             json_data = {
@@ -102,6 +97,11 @@ def orders():
             "message": "資料庫連線錯誤，請聯絡客服人員"
         }
     finally:
+        #刪除booking 中已成功訂購的訂單
+        sql = "DELETE FROM booking WHERE userid = %s "          #因為設計是一個userID 在booking 裡面只會有一份預定行程，故未來若想改成多個預定行程，需改動booking資料表欄位及此處的刪除方式(因未來可能改動，特此紀錄)
+        val = (userid,)
+        mycursor.execute(sql,val)
+        mydb.commit()
         mydb.close()
         mycursor.close()
         response = jsonify(json_data)
