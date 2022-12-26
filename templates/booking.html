@@ -57,16 +57,16 @@
         <div class="form_index" method='post'>
             <hr class="form_hr">
             <div class="form_title">信用卡付款資訊</div>
-            <div class="form_filed">卡片號碼：<input type="text" class="form_filed_input" name="credit_card"></div>
-            <div class="form_filed">過期時間：<input type="text" class="form_filed_input" name="expiration"></div>
-            <div class="form_filed">驗證密碼：<input type="text" class="form_filed_input" name="verify_password"></div>
+            <div class="form_filed">卡片號碼：<div class="form_filed_input" id="card-number"></div></div>
+            <div class="form_filed">過期時間：<div class="form_filed_input" id="card-expiration-date"></div></div>
+            <div class="form_filed">驗證密碼：<div class="form_filed_input" id="card-ccv"></div></div>
         </div>
         <div class="confirm">
             <hr class="form_hr">
             <div class="confirm_index">
                 <div>
                     <div class="sum">總價：新台幣 <span id = "sum"></span> 元</div>
-                    <input class="booking_button" type="submit" value="確認訂購並付款" >
+                    <input class="booking_button" type="button" value="確認訂購並付款" >
                 </div>
             </div>
         </div>
@@ -105,7 +105,134 @@
             </div>
         </div>
     </div>  
-   </body>
-   <script src="{{ url_for('static',filename='login.js')}}"></script>
-   <script src="{{ url_for('static',filename='booking.js')}}"></script>
+    </body>
+    <script src="{{ url_for('static',filename='login.js')}}"></script>
+    <script src="{{ url_for('static',filename='booking.js')}}"></script>
+    <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+    <script>
+        TPDirect.setupSDK(126941, "app_Azvn2KeIhCuP8ToAqvfxcKGXHrkEcopAIPUSJh94u8z5VwO0oaRtOKhca8dm", 'sandbox');
+        let fields = {
+            number: {
+                // css selector
+                element: '#card-number',
+                placeholder: '**** **** **** ****'
+            },
+            expirationDate: {
+                // DOM object
+                element: document.getElementById('card-expiration-date'),
+                placeholder: 'MM / YY'
+            },
+            ccv: {
+                element: '#card-ccv',
+                placeholder: '後三碼'
+            }
+        };
+        TPDirect.card.setup({
+            fields: fields,
+            styles: {
+                // Style all elements
+                'input': {
+                    'color': 'gray',
+                    "width" : "200px",
+                    "height" :"18px",
+                    "padding" : "9px 10px",
+                    "border" : "1px solid #E8E8E8",
+                    "border-radius" : "5px"  
+                },
+                // style valid state
+                '.valid': {
+                    'color': 'green'
+                },
+                // style invalid state
+                '.invalid': {
+                    'color': 'red'
+                },
+                // Media queries
+                // Note that these apply to the iframe, not the root window.
+                '@media screen and (max-width: 400px)': {
+                    'input': {
+                        'color': 'orange'
+                    }
+                }
+            },
+            // 此設定會顯示卡號輸入正確後，會顯示前六後四碼信用卡卡號
+            isMaskCreditCardNumber: true,
+            maskCreditCardNumberRange: {
+                beginIndex: 6, 
+                endIndex: 11
+            }
+        });
+
+        //get Prime
+        let buttom = document.querySelector(".booking_button");
+        buttom.addEventListener("click",(event)=>{
+            onSubmit(event)
+        })
+        function onSubmit(event) {
+            event.preventDefault()
+
+            // 取得 TapPay Fields 的 status
+            const tappayStatus = TPDirect.card.getTappayFieldsStatus()
+
+            // 確認是否可以 getPrime
+            if (tappayStatus.canGetPrime === false) {
+                alert('can not get prime')
+                return
+            }
+
+            // Get prime
+            TPDirect.card.getPrime((result) => {
+                //將prime 跟其他資訊送到後端
+                let prime = result.card.prime;
+                let price = document.querySelector("#sum").innerHTML;
+                let connectName = document.getElementsByName("name")[0].value;
+                let connectEmail = document.getElementsByName("email")[0].value;
+                let connectPhone = document.getElementsByName("phone")[0].value;
+                if(connectName === "" || connectEmail === "" || connectPhone === ""){
+                    alert("聯絡資訊不可為空");
+                    return
+                }
+                let contact = {
+                    "name": connectName,
+                    "email": connectEmail,
+                    "phone": connectPhone
+                }
+                let trip = tripData[0];
+                delete trip["price"];
+                delete trip["image"];
+                let order = {
+                    "price" : price,
+                    "trip" : trip,
+                    "contact" : contact
+                }
+
+                let url = "http://35.76.166.101:3000/api/orders";
+                fetch(url, {
+                    method:"POST",
+                    body: JSON.stringify({
+                        "prime" : prime,
+                        "order" : order
+                    }),
+                    credentials: "include",
+                    cache:"no-cache",
+                    headers: new Headers({
+                        "Content-Type":"application/json; charset=UTF-8",
+                    }),
+                }).then(res =>{
+                    res = res.json();
+                    return res
+                }).then(result =>{
+                    console.log(result)
+                    // 紀錄訂單編號，附在querystring 上並導向thankyou.html
+                    if(result["data"] != null){
+                        let serial_number = result["data"]["number"];
+                        window.location.href = "http://35.76.166.101:3000/thankyou?number="+serial_number
+                    }else{
+                        let serial_number = result["number"];
+                        window.location.href = "http://35.76.166.101:3000/thankyou?number="+serial_number+"&paid=-1"
+                    }
+                })
+            })
+        }
+    </script>
 </html>

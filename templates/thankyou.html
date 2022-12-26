@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta name='viewport' content='width=device-width',initial-scale=1.0/>
+      <meta charset='utf-8'/>
+      <title>Taipei-Day-Trip</title>
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='TDT-thankyou.css')}}"/>
+   </head>
+   <body class = "index">
+    <div class = "Navi">
+        <div class = "Navigation">
+            <div class = navigation>
+                <div class = "tdt" onclick = goHome()>台北一日遊</div>
+                <div class = "Frame2">
+                    <div class = "Fram1">
+                        <div class = "forNav">
+                            <div class = "forNav-1">預定行程</div>
+                        </div>
+                        <div class = "forNav">
+                            <div class = "forNav-1 forNav_hide" onclick = signOpen()>登入/註冊</div>
+                        </div>
+                        <div class = "forNav">
+                            <div class = "forNav-1" >登出帳戶</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="navi_hr">
+    <div class="thankyou_index">
+        <div class = "result_headline">行程預定<span class="result"></span></div>
+        <div class = "result_headline">您的訂單編號如下</div>
+        <div class="number"></div>
+        <div class="remind">請記住訂單編號，或稍後至會員中心查詢歷史訂單</div>
+    </div>
+
+    <div class = "footer" style="flex:1">
+        <div class = "foot">COPYRIGHT © 2021 台北一日遊</div>
+    </div>
+    <div class="sign">
+        <div class="sign_closed" onclick = signClosed()></div>
+        <div class="sign_bar">
+            <div class="sign_bar_top"><span class="passwordeyeO eyeactive" onclick = eyeSwitch()></span><span class="passwordeyeC" onclick = eyeSwitch()></span></div>
+            <div class="sign_bar_title">會員登入帳號</div>
+            <form id="signinform">
+                <input placeholder="輸入電子信箱" class="sign_text"/>
+                <input placeholder="輸入密碼" class="sign_text" type="password" onkeyup="this.value=this.value.replace(/[^\w_]/g,'')">
+            </form>
+            <input type="button" value="登入帳戶" class="sign_button" id="sign_in_button">
+            <div class="reminder1"></div>
+            <div class="sign_switch1">還沒有帳戶？
+                <div class="sign_switch2" onclick = signswitch()>點此註冊</div>
+            </div>
+        </div>
+
+        <div class="sign_bar sign_bar_hide">
+            <div class="sign_bar_top"><span class="passwordeyeO signup_eye" onclick = eyeSwitch()></span><span class="passwordeyeC signup_eye" onclick = eyeSwitch()></span></div>
+            <div class="sign_bar_title">註冊會員帳號</div>
+            <form action="/api/user" method="post" id="signupform">
+                <input placeholder="輸入姓名" class="sign_text" name="name" />
+                <input placeholder="輸入電子信箱" class="sign_text" name="email" />
+                <input placeholder="輸入密碼" class="sign_text" name="password" onkeyup="this.value=this.value.replace(/[^\w_]/g,'')">
+            </form>
+            <input type="button" value="註冊帳戶" class="sign_button" id="sign_up_button">
+            <div class="reminder2"></div>
+            <div class="sign_switch1">已經有帳戶了？
+                <div class="sign_switch2"  onclick = signswitch()>點此登入</div>
+            </div>
+        </div>
+    </div>  
+    </body>
+    <script src="{{ url_for('static',filename='login.js')}}"></script>
+    <script src="{{ url_for('static',filename='thankyou.js')}}"></script>

@@ -176,6 +176,7 @@ html{
     padding: 0 8px;
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
 }
 .info{
     width: 662px;
@@ -227,6 +228,8 @@ form{
     color: #666666;
 }
 .form_filed{
+    display: flex;
+    align-items: center;
     height: 38px;
     margin-bottom: 15px;
     font-family: 'Noto Sans TC';
@@ -244,6 +247,7 @@ form{
     color: #666666;
 }
 .form_filed_input{
+    width: 200px;
     height: 18px;
     padding: 9px 10px;
     border: 1px solid #E8E8E8;
