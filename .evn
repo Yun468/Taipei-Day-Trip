@@ -1,5 +1,0 @@
-PARTNER_KEY = "partner_KIcjSTwx3Zs9P70ckr7H1SPhYm5KNCKvR49QPYvX2vNjzL6pIw4Qsewz"
-MySQL_URL = "localhost"
-MySQL_USER = "root"
-MySQL_PWD = "123456"
-MySQL_DATABASE = "week"
