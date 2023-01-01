@@ -198,6 +198,12 @@
             </div>
         </div>
         <div class="finish">資料已全部呈現完畢</div>
+        <div class="loading">
+            <div class="status">
+                LOADING
+                <div class="loading_image"></div>
+            </div>
+        </div>
         <div class = "footer">
             <div class = "foot">COPYRIGHT © 2021 台北一日遊</div>
         </div>
@@ -231,7 +237,8 @@
                     <div class="sign_switch2"  onclick = signswitch()>點此登入</div>
                 </div>
             </div>
-        </div>    
+        </div>  
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>  
     <script src="{{ url_for('static',filename='index.js')}}"></script>
     <script src="{{ url_for('static',filename='login.js')}}"></script>
     </body>

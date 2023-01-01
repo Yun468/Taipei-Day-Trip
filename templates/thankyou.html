@@ -34,7 +34,12 @@
         <div class="number"></div>
         <div class="remind">請記住訂單編號，或稍後至會員中心查詢歷史訂單</div>
     </div>
-
+    <div class="loading">
+        <div class="status">
+            LOADING
+            <div class="loading_image"></div>
+        </div>
+    </div>
     <div class = "footer" style="flex:1">
         <div class = "foot">COPYRIGHT © 2021 台北一日遊</div>
     </div>
@@ -70,5 +75,6 @@
         </div>
     </div>  
     </body>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
     <script src="{{ url_for('static',filename='login.js')}}"></script>
     <script src="{{ url_for('static',filename='thankyou.js')}}"></script>
