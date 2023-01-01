@@ -111,7 +111,7 @@ deleteButton.addEventListener("click",()=>{
 
 //付款loading畫面
 $(document).ready(()=>{
-    $(document).on('click',".booking_button",()=>{
+    $(".booking_button").on("click",()=>{
         $(".loading").show()
     });
 })
