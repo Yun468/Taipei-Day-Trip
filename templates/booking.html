@@ -176,16 +176,16 @@
             onSubmit(event)
         })
         function onSubmit(event) {
-            event.preventDefault()
+            event.preventDefault();
 
             // 取得 TapPay Fields 的 status
-            const tappayStatus = TPDirect.card.getTappayFieldsStatus()
+            const tappayStatus = TPDirect.card.getTappayFieldsStatus();
 
             // 確認是否可以 getPrime
             if (tappayStatus.canGetPrime === false) {
-                alert('信用卡資料或其他資訊輸入有誤，請重新確認')
+                alert('信用卡資料輸入有誤，請重新確認')
                 return
-            }
+            };
 
             // Get prime
             TPDirect.card.getPrime((result) => {

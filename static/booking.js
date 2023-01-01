@@ -71,7 +71,7 @@ let deleteButton = document.querySelector(".delete");
 deleteButton.addEventListener("click",()=>{
     let url = "http://35.76.166.101:3000/api/booking";
 
-    let attractionId = deleteButton.dataset.attractionid
+    let attractionId = deleteButton.dataset.attractionid;
 
     fetch(url, {
         method:"DELETE",
