@@ -8,10 +8,9 @@ from apis.attractions import api1
 from apis.login import api2,Auth
 from apis.booking import api3,Travel
 from flask_restful import Api, Resource
-import jwt
-import time
-import requests
-
+import jwt,time,requests
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__,
         static_folder='static')
@@ -35,6 +34,8 @@ def orders():
     json_data = []
     mydb = mydbpool.get_connection()
     mycursor = mydb.cursor()
+    load_dotenv()
+    PARTNER_KEY = os.getenv("PARTNER_KEY")
     try:
         login_token = request.cookies.get("login_token")
         login_token = jwt.decode(login_token, 'secret', algorithms=['HS256'])
@@ -51,10 +52,10 @@ def orders():
 
         #傳送prime 到tappay
         phone_number = "+886"+(order["contact"]["phone"].lstrip())
-        headers = {"Content-Type":"application/json","x-api-key":"partner_KIcjSTwx3Zs9P70ckr7H1SPhYm5KNCKvR49QPYvX2vNjzL6pIw4Qsewz"}
+        headers = {"Content-Type":"application/json","x-api-key":PARTNER_KEY}
         data = {
             "prime":prime,
-            "partner_key":"partner_KIcjSTwx3Zs9P70ckr7H1SPhYm5KNCKvR49QPYvX2vNjzL6pIw4Qsewz",
+            "partner_key":PARTNER_KEY,
             "merchant_id":"Chiayun_ESUN",
             "details":"TDT Test",
             "amount":int(order["price"]),

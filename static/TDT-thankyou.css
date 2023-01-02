@@ -162,6 +162,36 @@ html{
     line-height: 20px;
     color: #666666;
 }
+/* ---------------------------------- loading */
+.loading{
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    left: 0%;
+    top: 0%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+.status{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: xx-large;
+    background: -webkit-linear-gradient(45deg, rgb(253, 18, 18)20%, rgb(221, 208, 67)50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #978170;
+}
+.loading_image{
+    width: 100px;
+    height: 100px;
+    background-image: url("loading4.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 /* ---------------------------------- footer */
 .footer{
     display: flex;

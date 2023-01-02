@@ -137,16 +137,29 @@
     let journey = document.querySelector(".button");
     journey.addEventListener("click",() =>{
         let login_token = (document.cookie).indexOf("login_token");
-        console.log(login_token )
         if(login_token == -1){
             signOpen()
             return
         }
         else{
-            let url = "http://35.76.166.101:3000/api/booking";
-
-            let id = location.href.split("/")[4].split("?")[0];
             let date = document.getElementById("date").value;
+        //檢查日期是否輸入正確(需至少提前一日)
+            dateYear = parseInt(date[0]+date[1]+date[2]+date[3]);             
+            dateMonth = parseInt(date[5]+date[6])-1;            //Date()中奇怪的設定:假設要取得1月，在參數部分需數入0(猜測原始設定是從0開始計算)，故此處在最後需-1
+            dateDay = parseInt(date[8]+date[9]);
+            let today=new Date();               //今天日期
+            let someday = new Date(dateYear,dateMonth,dateDay);       //選擇日期
+            if (someday <= today){
+                alert("出發日期須至少提前一日");
+                return
+            };
+            if (date == ""){
+                alert("請選擇出發日期");
+                return
+            };
+        //日期正確，程式往下抓取資料    
+            let url = "http://35.76.166.101:3000/api/booking";
+            let id = location.href.split("/")[4].split("?")[0];
             let price = "";
             let timeRadios = document.getElementsByName("time");
             for (x=0; x<2; x++){

@@ -71,6 +71,12 @@
             </div>
         </div>
     </form>
+    <div class="loading">
+        <div class="status">
+            LOADING
+            <div class="loading_image"></div>
+        </div>
+    </div>
     <div class = "footer" style="flex:1">
         <div class = "foot">COPYRIGHT © 2021 台北一日遊</div>
     </div>
@@ -106,6 +112,7 @@
         </div>
     </div>  
     </body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="{{ url_for('static',filename='login.js')}}"></script>
     <script src="{{ url_for('static',filename='booking.js')}}"></script>
     <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
@@ -169,16 +176,16 @@
             onSubmit(event)
         })
         function onSubmit(event) {
-            event.preventDefault()
+            event.preventDefault();
 
             // 取得 TapPay Fields 的 status
-            const tappayStatus = TPDirect.card.getTappayFieldsStatus()
+            const tappayStatus = TPDirect.card.getTappayFieldsStatus();
 
             // 確認是否可以 getPrime
             if (tappayStatus.canGetPrime === false) {
-                alert('can not get prime')
+                alert('信用卡資料輸入有誤，請重新確認')
                 return
-            }
+            };
 
             // Get prime
             TPDirect.card.getPrime((result) => {

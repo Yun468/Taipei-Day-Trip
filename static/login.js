@@ -271,3 +271,7 @@ reserveJourney.addEventListener("click",()=>{
     }
 })
 
+//載入等待畫面
+$(document).ready(()=>{
+    $(".loading").delay(450).hide(1)
+})
