@@ -228,15 +228,14 @@
 //點擊圖片跳轉
     function turnPage(){
         window.addEventListener("click",function (event){
-            let path = event.path;      //array
             let choseditem = event.target;
             let obChose ="";
             if (choseditem.className == "obin"){
-                obChose = path[1];
-            }else if(choseditem.className == "tit"){
-                obChose = path[3];
+                obChose = choseditem.parentNode;
+            }else if(choseditem.className == "title"){
+                obChose = choseditem.parentNode.parentNode;
             }else{
-                obChose = path[2];
+                obChose = choseditem.parentNode.parentNode.parentNode;
             };
             let id = obChose.id;
             if(id ==""){
