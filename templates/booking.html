@@ -186,6 +186,10 @@
                 alert('信用卡資料輸入有誤，請重新確認')
                 return
             };
+            // 信用卡資料ok後的載入等待畫面
+            $(document).ready(()=>{
+                $(".loading").show()
+            })
 
             // Get prime
             TPDirect.card.getPrime((result) => {
